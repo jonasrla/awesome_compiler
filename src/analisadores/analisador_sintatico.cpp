@@ -1,0 +1,1 @@
+#include "analisador_sintatico.h"

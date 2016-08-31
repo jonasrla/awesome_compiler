@@ -1,0 +1,1 @@
+#include "analisador_de_escopo.h"
