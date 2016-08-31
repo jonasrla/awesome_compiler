@@ -5,7 +5,7 @@ IME Compiladores Project
 `make`
 
 #### Run
-`awe_comp [SCRIPT_NAME] -o [OUTPUT_FILE_NAME]`
+`awe_comp [SCRIPT_NAME] [-o OUTPUT_FILE_NAME]`
 
 #### Clean
 `make clean`
