@@ -43,5 +43,10 @@ int main(int argc, char const *argv[])
     }
     printf("input_file_name: %s\noutput_file_name: %s\n", input_file_name.c_str(), output_file_name.c_str());
     // END command line inputs
+
+    program = fopen(input_file_name.c_str(), "r");
+    do{
+        token = nextToken();
+    } while(token != END);
     return 0;
 }
