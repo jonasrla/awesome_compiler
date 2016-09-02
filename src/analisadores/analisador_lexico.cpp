@@ -1,5 +1,5 @@
 #include "analisador_lexico.h"
-#include <list>
+#include <vector>
 #include <stdlib.h>
 
 using namespace std;
@@ -8,7 +8,7 @@ char nextChar = '\x20';
 t_token token = UNKNOWN;
 int tokenSecundario = 0;
 FILE *program;
-list<t_const> constantList;
+vector<t_const*> constantList;
 
 token_dict ReservedWords;
 sec_token_dict UnreservedWords;
@@ -265,4 +265,14 @@ char readChar(){
     } else {
         return '\0';
     }
+}
+
+char getCharConst(int n){
+    return constantList[n]->_.cVal;
+}
+int  getIntConst(int n){
+    return constantList[n]->_.nVal;
+}
+string getStringConst(int n){
+    return *(constantList[n]->_.sVal);
 }
