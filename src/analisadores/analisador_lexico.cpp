@@ -48,8 +48,8 @@ t_token nextToken(){
             str += nextChar;
             nextChar = readChar();
         } while (nextChar != '"');
-
-        token = STRING;
+        nextChar = readChar();
+        token = STRINGVAL;
         tokenSecundario = addStringConst(str);
     } else if (nextChar == '\0') {
         return END;
