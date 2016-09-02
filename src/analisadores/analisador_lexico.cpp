@@ -1,5 +1,6 @@
 #include "analisador_lexico.h"
 #include <list>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -205,22 +206,23 @@ int searchName(string name){
 }
 
 int addIntConst(int value){
-    t_const instance;
-    instance._.nVal = value;
+    t_const* instance = (t_const*)malloc(sizeof(t_const));
+    instance->_.nVal = value;
     constantList.push_back(instance);
     return constantList.size();
 }
 
 int addCharConst(char value){
-    t_const instance;
-    instance._.cVal = value;
+    t_const* instance = (t_const*)malloc(sizeof(t_const));
+    instance->_.cVal = value;
     constantList.push_back(instance);
     return constantList.size();
 }
 
-int addStringConst(char * s){
-    t_const instance;
-    instance._.sVal = s;
+int addStringConst(string s){
+    t_const* instance = (t_const*)malloc(sizeof(t_const));
+    instance->_.sVal = new string();
+    *(instance->_.sVal) = s;
     constantList.push_back(instance);
     return constantList.size();
 }
