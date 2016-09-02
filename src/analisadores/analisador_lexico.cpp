@@ -219,14 +219,14 @@ int addIntConst(int value){
     t_const* instance = (t_const*)malloc(sizeof(t_const));
     instance->_.nVal = value;
     constantList.push_back(instance);
-    return constantList.size();
+    return constantList.size() - 1;
 }
 
 int addCharConst(char value){
     t_const* instance = (t_const*)malloc(sizeof(t_const));
     instance->_.cVal = value;
     constantList.push_back(instance);
-    return constantList.size();
+    return constantList.size() - 1;
 }
 
 int addStringConst(string s){
@@ -234,7 +234,7 @@ int addStringConst(string s){
     instance->_.sVal = new string();
     *(instance->_.sVal) = s;
     constantList.push_back(instance);
-    return constantList.size();
+    return constantList.size() - 1;
 }
 
 void populateReservedWords(){
