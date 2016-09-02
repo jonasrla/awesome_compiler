@@ -1,0 +1,57 @@
+type int = integer;
+type intArray = array[10] of int;
+type Pessoa = struct{
+	nome : string;
+	id : int;
+	telefones : intArray
+};
+
+type pessoaArray = array[20] of Pessoa;
+
+function funcaoSemParametros() : integer{
+	var i,j,k : integer;
+	i = j-k++;	
+	return 0;
+}
+
+function funcaoRecursiva(n : int) : integer{
+	var p : integer;
+	if(n == 0)
+		return 1;
+	p = funcaoRecursiva(n-1);
+	return p*3;
+}
+
+function addPessoa(posicao : integer, pessoa : Pessoa,arr : pessoaArray) : integer{
+	var a,g,i,n : int;
+	var b : int;
+	var c : boolean;
+	var str : string;
+	var carac1,carac2 : char;
+	a = posicao;
+	c = (a>b) && (a<b) || (a <= b) || (b>= a);
+	g = i = n = 0;
+	if(a > b){
+		pessoa.telefones[2] = g;
+		do{
+			g = g*2;
+			arr[i] = pessoa;
+			i++;
+			if(arr[i].nome == "abcde"){
+				funcaoRecursiva(1);
+			}
+			funcaoSemParametros();
+		}while(50*i > g);
+	}
+
+	c = true && false;
+	carac1 = 'a';
+	carac2 = 'b';
+
+	while(i < g){
+		carac1 = 'b';
+		str = "abcdef";
+		str[1] = str[0];
+		i++;
+	}
+}
