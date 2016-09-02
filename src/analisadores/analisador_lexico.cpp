@@ -40,15 +40,14 @@ t_token nextToken(){
 
     } else if (nextChar == '"') {
         string str;
-        char * s;
+        nextChar = readChar();
         do {
             str += nextChar;
             nextChar = readChar();
         } while (nextChar != '"');
 
         token = STRING;
-        s = str.c_str()
-        tokenSecundario = addStringConst(s);
+        tokenSecundario = addStringConst(str);
     } else if (nextChar == '\0') {
         return END;
     } else {

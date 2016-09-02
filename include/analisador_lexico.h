@@ -30,7 +30,7 @@ typedef struct {
     union{
         char cVal;
         int nVal;
-        char* sVal;
+        string* sVal;
     } _ ;
 } t_const;
 
@@ -45,9 +45,9 @@ t_token searchKeyWord(string name);
 // busca um token secundário
 int searchName(string name);
 
-int addStringConst(char* s);                   
 int addCharConst(char c);
 int addIntConst(int n);
+int addStringConst(string s);
 
 char getCharConst(int n);
 int  getIntConst(int n);
