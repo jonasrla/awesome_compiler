@@ -19,6 +19,8 @@ DF -> function IDD NB ( LP ) : TP B
 LP -> LP , IDD : TP
 LP -> IDD : TP
 B -> { LDV LS }
+LDV -> LDV DV
+LDV -> DV
 LS -> LS S
 LS -> S
 DV -> var LI : TP ;
