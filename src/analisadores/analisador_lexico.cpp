@@ -9,6 +9,7 @@ int tokenSecundario = 0;
 FILE *program;
 list<t_const> constantList;
 
+token_dict ReservedWords;
 
 t_token nextToken(){
 
@@ -221,8 +222,35 @@ int addStringConst(char * s){
     return constantList.size();
 }
 
+void populateReservedWords(){
+    ReservedWords["array"] = ARRAY;
+    ReservedWords["boolean"] = BOOLEAN;
+    ReservedWords["break"] = BREAK;
+    ReservedWords["char"] = CHAR;
+    ReservedWords["continue"] = CONTINUE;
+    ReservedWords["do"] = DO;
+    ReservedWords["else"] = ELSE;
+    ReservedWords["false"] = FALSE;
+    ReservedWords["function"] = FUNCTION;
+    ReservedWords["if"] = IF;
+    ReservedWords["integer"] = INTEGER;
+    ReservedWords["of"] = OF;
+    ReservedWords["string"] = STRING;
+    ReservedWords["struct"] = STRUCT;
+    ReservedWords["true"] = TRUE;
+    ReservedWords["type"] = TYPE;
+    ReservedWords["var"] = VAR;
+    ReservedWords["while"] = WHILE;
+    ReservedWords["return"] = RETURN;
+}
+
 t_token searchKeyWord(string name){
-    return UNKNOWN;
+    if  (ReservedWords.empty())
+        populateReservedWords();
+    if (ReservedWords.count(name)) {
+        return ReservedWords[name];
+    }
+    return ID;
 }
 
 char readChar(){

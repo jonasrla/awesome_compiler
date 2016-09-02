@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 using namespace std;
 
@@ -34,6 +35,7 @@ typedef struct {
     } _ ;
 } t_const;
 
+typedef unordered_map<string, t_token> token_dict;
 extern char nextChar;
 extern t_token token;
 extern int tokenSecundario;
