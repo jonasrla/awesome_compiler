@@ -18,15 +18,14 @@ DIVIDE, DOT, NOT,
 // tokens regulares
 CHARACTER, NUMERAL, STRINGVAL, ID,
 
-// token deconhecido
+// token desconhecido
 UNKNOWN,
 
 // fim do arquivo
 END
 } t_token;
 
-typedef struct
-{
+typedef struct {
     char type; //0-char, 1-int, 2-string
     union{
         char cVal;
@@ -41,19 +40,19 @@ extern int tokenSecundario;
 extern FILE* program;
 
 // Busca entre as palavras reservadas
-t_token searchKeyWord(string name);             
+t_token searchKeyWord(string name);
 
 // busca um token secundário
-int searchName(string name);                    
+int searchName(string name);
 
-int addCharConst(char c);                       //
-int addIntConst(int n);                         //
 int addStringConst(char* s);                   
+int addCharConst(char c);
+int addIntConst(int n);
 
 char getCharConst(int n);
 int  getIntConst(int n);
 string getStringConst(int n);
 
-char readChar();                                //
+char readChar();
 
-t_token nextToken();                            //
+t_token nextToken();
