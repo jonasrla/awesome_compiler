@@ -1,0 +1,78 @@
+
+P' -> P $
+P -> LDE
+LDE -> LDE DE
+LDE -> DE
+DE -> DF
+DE -> DT
+DT -> type IDD = array [ NUM ] of TP
+DT -> type IDD = struct NB { DC }
+DT -> type IDD = TP
+TP -> integer
+TP -> char
+TP -> boolean
+TP -> string
+TP -> IDU
+DC -> DC ; LI : TP
+DC -> LI : TP
+DF -> function IDD NB ( LP ) : TP B
+LP -> LP , IDD : TP
+LP -> IDD : TP
+B -> { LDV LS }
+LS -> LS S
+LS -> S
+DV -> var LI : TP ;
+LI -> LI , IDD
+LI -> IDD
+S -> if ( E ) S
+S -> if ( E ) S else S
+S -> while ( E ) S
+S -> do S while ( E ) ;
+S -> B
+S -> LV = E ;
+S -> break ;
+S -> continue ;
+E -> E && L
+E -> E || L
+E -> L
+L -> L < R
+L -> L > R
+L -> L <= R
+L -> L >= R
+L -> L == R
+L -> L != R
+L -> R
+R -> R + TM
+R -> R - TM
+R -> TM
+TM -> TM * F
+TM -> TM / F
+TM -> F
+F -> LV
+F -> ++ LV
+F -> -- LV
+F -> LV ++
+F -> LV --
+F -> ( E )
+F -> IDU ( LE )
+F -> - F
+F -> ! F
+F -> TRUE
+F -> FALSE
+F -> CHR
+F -> STR
+F -> NUM
+LE -> LE , E
+LE -> E
+LV -> LV . ID
+LV -> LV [ E ]
+LV -> IDU
+IDD -> Id
+IDU -> Id
+ID -> Id
+TRUE -> true
+FALSE -> false
+CHR -> c
+STR -> s
+NUM -> n
+NB -> ''
