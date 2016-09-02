@@ -110,12 +110,22 @@ t_token nextToken(){
 
             case '&':
                 nextChar = readChar();
-                token = AND;
+                if (nextChar == '&'){
+                    token = AND;
+                } else {
+                    token = UNKNOWN;
+                }
+                nextChar = readChar();
                 break;
 
             case '|':
                 nextChar = readChar();
-                token = OR;
+                if (nextChar == '|'){
+                    token = OR;
+                } else {
+                    token = UNKNOWN;
+                }
+                nextChar = readChar();
                 break;
 
             case '*':
