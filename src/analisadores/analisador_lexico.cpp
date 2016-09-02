@@ -10,6 +10,7 @@ FILE *program;
 list<t_const> constantList;
 
 token_dict ReservedWords;
+sec_token_dict UnreservedWords;
 
 t_token nextToken(){
 
@@ -198,7 +199,9 @@ t_token nextToken(){
 }
 
 int searchName(string name){
-    return 0;
+    if (UnreservedWords.count(name) == 0)
+        UnreservedWords[name] = UnreservedWords.size();
+    return UnreservedWords[name];
 }
 
 int addIntConst(int value){
