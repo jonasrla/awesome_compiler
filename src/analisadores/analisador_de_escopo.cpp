@@ -1,8 +1,8 @@
-#include <string>
+/*#include <string>
 #include <iostream>
-
+#include <stack>
 using namespace std;
-
+#define MAX_NEST_LEVEL 50
 
 extern FILE *out;
 bool hasError = false;
@@ -12,6 +12,7 @@ typedef struct object
 {
     int nName;
     struct object *pNext;
+    struct obj;
 } object, *pobject;
 
 pobject    SymbolTable[MAX_NEST_LEVEL]; 
@@ -73,9 +74,13 @@ pobject find (int aName)
     return obj;
 }
 
+typedef enum {
+    ERR_REDCL,ERR_NO_DECL
+} errorcode;
+
 void Error(errorcode code){
     hasError = true;
-    cout << "Linha: " << currentLine << " - ";
+    //cout << "Linha: " << currentLine << " - ";
     switch(code){
         case ERR_NO_DECL:
             cout << "Variavel nao declarada";
@@ -90,11 +95,13 @@ void Error(errorcode code){
 }
 
 void semantics(int rule){
-
+    static object IDD,IDU,ID;
+    static int name
+    static pobject p;
     switch(rule){
-        case IDD_RULE:
+        case IDD:
             name = tokenSecundario;
-            IDD.name = name;
+            IDD.nName = name;
             if( (p = search(name)) != NULL){
                 Error(ERR_REDCL);
             }
@@ -104,9 +111,9 @@ void semantics(int rule){
             
             IDD.obj = p;
             break;
-        case IDU_RULE:
+        case IDU:
             name = tokenSecundario;
-            IDU.name = name;
+            IDU.nName = name;
             
             //cout << "TOKENSECUNDARIO" << name << endl;
             if((p = find(name)) == NULL){
@@ -115,23 +122,23 @@ void semantics(int rule){
             }
             IDU.obj = p;
             break;
-        case ID_RULE:
+        case ID:
             name = tokenSecundario;
-            ID.name = name;
+            ID.nName = name;
             ID.obj = NULL;
             break;
    
-        case NB_RULE:
+        case NB:
             newBlock();
             break;
-        case DT_RULE:
+        case DT:
             endBlock();
             break;
 
-        case DF_RULE:
+        case DF:
             endBlock();
             break;
         default:
             break;
     }
-}
+}*/

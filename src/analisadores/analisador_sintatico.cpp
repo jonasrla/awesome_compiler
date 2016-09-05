@@ -1,7 +1,7 @@
 #include "analisador_sintatico.h"
 #include "analisador_lexico.h"
 
-
+#include <cstring>
 #include "csv.h"
 #include <stack>
 #include <vector>
