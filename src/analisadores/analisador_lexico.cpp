@@ -28,7 +28,7 @@ t_token nextToken(){
 
         token = searchKeyWord(text);
         
-        if(token == ID)
+        if(token == IDT)
             tokenSecundario = searchName(text);
 
     } else if (isdigit(nextChar)){
@@ -265,7 +265,7 @@ t_token searchKeyWord(string name){
     if (ReservedWords.count(name)) {
         return ReservedWords[name];
     }
-    return ID;
+    return IDT;
 }
 
 char readChar(){

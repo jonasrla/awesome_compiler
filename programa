@@ -1,0 +1,33 @@
+type id = string
+
+type structTest = struct { id1 , id2 , id3 : integer ; id4 , id5 : string }
+
+function fun1 ( id : string ) : integer {
+	var c : boolean;
+	var a : integer;
+	var b : integer;
+	var i : integer;
+	c = true && false;
+
+	while( a != b)
+		i = i+1;
+}
+
+function fun2 ( id : string ) : integer {
+	var c : boolean;
+	var a : integer;
+	var b : integer;
+	var x : integer;
+	c = true && false;
+	if( a>b || 12 ==x) {
+		var i: integer;
+		i = i+1;
+	} else {
+		var t: integer;
+		t = t +1;
+	}
+	if(a==fun2(3))
+		break;
+	else
+		break;
+}
