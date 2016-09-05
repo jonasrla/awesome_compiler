@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <string>
+#include <cstring>
 #include <stdlib.h> 
 
 #include "analisador_lexico.h"
