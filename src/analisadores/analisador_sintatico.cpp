@@ -10,6 +10,8 @@
 using namespace std;
 
 stack<int> pilhaEstado;
+t_token CSVdict[49];
+
 vector<unordered_map<int,int>> Action(160);
 
 int LEN[] = {P, LDE, LDE, DE, DE, DT, DT, DT, TP, TP, TP, TP, TP, DC, DC, DF, LP, LP, B, LDV, LDV, LS, LS, DV, LI, LI, S, S, S, S, S, S, S, S, E, E, E, L, L, L, L, L, L, L, R, R, R, TM, TM, TM, F, F, F, F, F, F, F, F, F, F, F, F, F, F, LE, LE, LV, LV, LV, IDD, IDU, ID, NT_TRUE, NT_FALSE, NT_CHR, NT_STR, NT_NUM, NB};
@@ -25,6 +27,58 @@ void cb1 (void *s, size_t len, void *data) {
   column++;
 }
 void cb2 (int c, void *data) { row++; column=0;}
+
+void PopulaCSVDict(){
+    CSVdict[0] = TYPE;
+    CSVdict[1] = EQUALS;
+    CSVdict[2] = ARRAY;
+    CSVdict[3] = LEFT_SQUARE;
+    CSVdict[4] = RIGHT_SQUARE;
+    CSVdict[5] = OF;
+    CSVdict[6] = STRUCT;
+    CSVdict[7] = LEFT_BRACES;
+    CSVdict[8] = RIGHT_BRACES;
+    CSVdict[9] = INTEGER;
+    CSVdict[10] = CHAR;
+    CSVdict[11] = BOOLEAN;
+    CSVdict[12] = STRING;
+    CSVdict[13] = SEMI_COLON;
+    CSVdict[14] = COLON;
+    CSVdict[15] = FUNCTION;
+    CSVdict[16] = LEFT_PARENTHESIS;
+    CSVdict[17] = RIGHT_PARENTHESIS;
+    CSVdict[18] = COMMA;
+    CSVdict[19] = VAR;
+    CSVdict[20] = IF;
+    CSVdict[21] = ELSE;
+    CSVdict[22] = WHILE;
+    CSVdict[23] = DO;
+    CSVdict[24] = BREAK;
+    CSVdict[25] = CONTINUE;
+    CSVdict[26] = AND;
+    CSVdict[27] = OR;
+    CSVdict[28] = LESS_THAN;
+    CSVdict[29] = GREATER_THAN;
+    CSVdict[30] = LESS_OR_EQUAL;
+    CSVdict[31] = GREATER_OR_EQUAL;
+    CSVdict[32] = EQUAL_EQUAL;
+    CSVdict[33] = NOT_EQUAL;
+    CSVdict[34] = PLUS;
+    CSVdict[35] = MINUS;
+    CSVdict[36] = TIMES;
+    CSVdict[37] = DIVIDE;
+    CSVdict[38] = PLUS_PLUS;
+    CSVdict[39] = MINUS_MINUS;
+    CSVdict[40] = NOT;
+    CSVdict[41] = DOT;
+    CSVdict[42] = IDT;
+    CSVdict[43] = TRUE;
+    CSVdict[44] = FALSE;
+    CSVdict[45] = CHARACTER;
+    CSVdict[46] = STRINGVAL;
+    CSVdict[47] = NUMERAL;
+    CSVdict[48] = END;
+}
 
 void PopulaAction(){
     PopulaCSVDict();
