@@ -5,6 +5,7 @@
 #include "analisador_lexico.h"
 #include "analisador_sintatico.h"
 #include "analisador_de_escopo.h"
+#include <errno.h>
 
 void ERROR_FUNC(){
     printf("Invalid arguments\nUsage: awe_comp [SCRIPT_NAME] [-o OUTPUT_FILE_NAME]\n");
@@ -48,5 +49,8 @@ int main(int argc, char const *argv[])
     do{
         token = nextToken();
     } while(token != END);
+    if (!program) {
+        fprintf(stderr, "Failed to open %s: %s\n", input_file_name.c_str(), strerror(errno));
+    }
     return 0;
 }
