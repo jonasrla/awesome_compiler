@@ -168,5 +168,5 @@ void parse(){
         }
         q = TOP();
     }
-    } while(q != 1);
+    } while(q != 300);
 }
