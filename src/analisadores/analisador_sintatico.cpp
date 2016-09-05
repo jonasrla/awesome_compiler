@@ -23,6 +23,7 @@ int row = 0;
 
 void SyntaxError(){
     printf("Deu ruim!\n");
+    exit(1);
 }
 
 void cb1 (void *s, size_t len, void *data) {
