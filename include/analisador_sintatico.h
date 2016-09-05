@@ -24,4 +24,8 @@
 #define TOP() (pilhaEstado.top())
 #endif
 
+typedef enum{
+    P = 50,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB
+} t_nterm;
+
 void parse();
