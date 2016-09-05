@@ -1,4 +1,5 @@
 #include "analisador_sintatico.h"
+#include "analisador_lexico.h"
 
 
 #include "csv.h"
@@ -19,6 +20,11 @@ int LEFT[] = {1, 2, 1, 1, 1, 9, 8, 4, 1, 1, 1, 1, 1, 5, 3, 9, 5, 3, 4, 2, 1, 2, 
 
 int column = 0;
 int row = 0;
+
+void SyntaxError(){
+    printf("Deu ruim!\n");
+}
+
 void cb1 (void *s, size_t len, void *data) {
   if (len){
     string str((char *)s);

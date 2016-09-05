@@ -28,7 +28,7 @@ t_token nextToken(){
 
         token = searchKeyWord(text);
         
-        if(token == ID)
+        if(token == IDT)
             tokenSecundario = searchName(text);
 
     } else if (isdigit(nextChar)){
