@@ -1,4 +1,6 @@
 #include "analisador_sintatico.h"
+#include <stack>
+stack<int> pilhaEstado;
 void parse(){
     PopulaAction();
     int p = 0;
