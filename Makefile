@@ -1,6 +1,6 @@
 CXX = g++
 CFLAGS = -Wall -Iinclude -std=c++11
-LFLAGS = -WALL
+LFLAGS = -WALL -lcsv
 
 DEBUG = 0
 
@@ -41,5 +41,6 @@ build/src/%.o: src/%.cpp
 build/src/analisadores/analisador_de_escopo.o: include/analisador_de_escopo.h
 build/src/analisadores/analisador_lexico.o: include/analisador_lexico.h
 build/src/analisadores/analisador_sintatico.o: include/analisador_sintatico.h
+build/src/analisadores/analisador_sintatico.o: include/analisador_lexico.h
 build/src/main.o: include/analisador_lexico.h include/analisador_sintatico.h
 build/src/main.o: include/analisador_de_escopo.h

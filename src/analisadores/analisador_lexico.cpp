@@ -265,7 +265,7 @@ t_token searchKeyWord(string name){
     if (ReservedWords.count(name)) {
         return ReservedWords[name];
     }
-    return ID;
+    return IDT;
 }
 
 char readChar(){
