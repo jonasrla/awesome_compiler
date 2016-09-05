@@ -46,11 +46,30 @@ int main(int argc, char const *argv[])
     // END command line inputs
 
     program = fopen(input_file_name.c_str(), "r");
-    do{
-        token = nextToken();
-    } while(token != END);
     if (!program) {
         fprintf(stderr, "Failed to open %s: %s\n", input_file_name.c_str(), strerror(errno));
     }
+    // do{
+    //     token = nextToken();
+    //     printf("%d\n", token);
+    //     if (token == CHARACTER){
+    //         printf("CHAR\n");
+    //         printf("id=%d\n%c\n", tokenSecundario, getCharConst(tokenSecundario));
+    //     }
+    //     if (token == NUMERAL){
+    //         printf("INT\n");
+    //         printf("id=%d\n%d\n", tokenSecundario, getIntConst(tokenSecundario));
+    //     }
+    //     if (token == STRINGVAL){
+    //         printf("STRING\n");
+    //         printf("id=%d\n%s\n", tokenSecundario, getStringConst(tokenSecundario).c_str());
+    //     }
+    //     if (token == ID){
+    //         printf("ID\n");
+    //         printf("id=%d\n", tokenSecundario);
+    //     }
+    //     printf("\n");
+    // } while(token != END);
+    parse();
     return 0;
 }
