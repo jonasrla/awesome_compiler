@@ -11,7 +11,7 @@
 using namespace std;
 
 stack<int> pilhaEstado;
-t_token CSVdict[49];
+int CSVdict[79];
 
 vector<unordered_map<int,int>> Action(160);
 
@@ -84,6 +84,37 @@ void PopulaCSVDict(){
     CSVdict[46] = STRINGVAL;
     CSVdict[47] = NUMERAL;
     CSVdict[48] = END;
+    CSVdict[49] = P;
+    CSVdict[50] = LDE;
+    CSVdict[51] = DE;
+    CSVdict[52] = DT;
+    CSVdict[53] = TP;
+    CSVdict[54] = DC;
+    CSVdict[55] = DF;
+    CSVdict[56] = LP;
+    CSVdict[57] = B;
+    CSVdict[58] = LDV;
+    CSVdict[59] = LS;
+    CSVdict[60] = DV;
+    CSVdict[61] = LI;
+    CSVdict[62] = S;
+    CSVdict[63] = E;
+    CSVdict[64] = L;
+    CSVdict[65] = R;
+    CSVdict[66] = TM;
+    CSVdict[67] = F;
+    CSVdict[68] = LE;
+    CSVdict[69] = LV;
+    CSVdict[70] = IDD;
+    CSVdict[71] = IDU;
+    CSVdict[72] = ID;
+    CSVdict[73] = NT_TRUE;
+    CSVdict[74] = NT_FALSE;
+    CSVdict[75] = NT_CHR;
+    CSVdict[76] = NT_STR;
+    CSVdict[77] = NT_NUM;
+    CSVdict[78] = NB;
+
 }
 
 void PopulaAction(){
