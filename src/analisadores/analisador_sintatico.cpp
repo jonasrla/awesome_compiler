@@ -170,4 +170,5 @@ void parse(){
         q = TOP();
     }
     } while(q != 300);
+    printf("Passou\n");
 }
