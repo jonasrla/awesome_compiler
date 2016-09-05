@@ -27,7 +27,7 @@ void SyntaxError(){
 
 void cb1 (void *s, size_t len, void *data) {
   if (len){
-    string str((char *)s);
+    string str((char *)s, len);
     Action[row][CSVdict[column]] = stoi(str);
   }
   column++;
