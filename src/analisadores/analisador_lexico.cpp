@@ -9,6 +9,7 @@ t_token token = UNKNOWN;
 int tokenSecundario = 0;
 FILE *program;
 vector<t_const*> constantList;
+int currentLine = 1;
 
 token_dict ReservedWords;
 sec_token_dict UnreservedWords;
@@ -270,6 +271,9 @@ t_token searchKeyWord(string name){
 
 char readChar(){
     char res = fgetc(program);
+    if(res == '\n'){
+        currentLine++;
+    }
     if (res != EOF){
         return res;
     } else {

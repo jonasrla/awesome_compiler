@@ -38,6 +38,7 @@ typedef struct {
 typedef unordered_map<string, t_token> token_dict;
 typedef unordered_map<string, int> sec_token_dict;
 
+extern int currentLine;
 extern char nextChar;
 extern t_token token;
 extern int tokenSecundario;
