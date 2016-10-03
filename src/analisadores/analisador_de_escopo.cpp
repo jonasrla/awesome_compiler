@@ -5,9 +5,6 @@
 using namespace std;
 #define MAX_NEST_LEVEL 50
 
-extern FILE *out;
-bool hasError = false;
-
 pobject    SymbolTable[MAX_NEST_LEVEL]; 
 pobject    SymbolTableLast[MAX_NEST_LEVEL]; 
 int        nCurrentLevel = 0; 
