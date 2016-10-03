@@ -30,75 +30,94 @@ typedef enum{
 
 void parse();
 
-#define TYPE_IDD_EQUALS_ARRAY_NT_NUM_OF_TP_RULE 6
-#define TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE 7
-#define TYPE_IDD_EQUALS_TP_RULE 8
-#define INTEGER_RULE 9
-#define CHAR_RULE 10
-#define BOOLEAN_RULE 11
-#define STRING_RULE 12
-#define TP_IDU_RULE 13
-#define DC_LI_TP_RULE 14
-#define LI_TP_RULE 15
-#define FUNCTION_IDD_NB_LP_TP_B_RULE 16
-#define LP_IDD_TP_RULE 17
-#define IDD_TP_RULE 18
-#define LDV_LS_RULE 19
-#define LDV_DV_RULE 20
-#define DV_RULE 21
-#define LS_S_RULE 22
-#define S_RULE 23
-#define VAR_LI_TP_RULE 24
-#define LI_IDD_RULE 25
-#define IDD_RULE 26
-#define IF_E_S_RULE 27
-#define IF_E_S_ELSE_S_RULE 28
-#define WHILE_E_S_RULE 29
-#define DO_S_WHILE_E_RULE 30
-#define B_RULE 31
-#define LV_EQUALS_E_RULE 32
-#define BREAK_RULE 33
-#define CONTINUE_RULE 34
-#define E_AND_L_RULE 35
-#define E_OR_L_RULE 36
-#define L_RULE 37
-#define L_LESS_THAN_R_RULE 38
-#define L_GREATER_THAN_R_RULE 39
-#define L_LESS_OR_EQUAL_R_RULE 40
-#define L_GREATER_OR_EQUAL_R_RULE 41
-#define L_EQUAL_EQUAL_R_RULE 42
-#define L_NOT_EQUAL_R_RULE 43
-#define R_RULE 44
-#define R_PLUS_TM_RULE 45
-#define R_MINUS_TM_RULE 46
-#define TM_RULE 47
-#define TM_TIMES_F_RULE 48
-#define TM_DIVIDE_F_RULE 49
-#define F_RULE 50
-#define LV_RULE 51
-#define PLUS_PLUS_LV_RULE 52
-#define MINUS_MINUS_LV_RULE 53
-#define LV_PLUS_PLUS_RULE 54
-#define LV_MINUS_MINUS_RULE 55
-#define F_E_RULE 56
-#define IDU_LE_RULE 57
-#define MINUS_F_RULE 58
-#define NOT_F_RULE 59
-#define NT_TRUE_RULE 60
-#define NT_FALSE_RULE 61
-#define NT_CHR_RULE 62
-#define NT_STR_RULE 63
-#define NT_NUM_RULE 64
-#define LE_COMMA_E_RULE 65
-#define LE_E_RULE 66
-#define LV_DOT_ID_RULE 67
-#define LV_E_RULE 68
-#define LV_IDU_RULE 69
-#define IDD_IDENTIFIER_RULE 70
-#define IDU_IDENTIFIER_RULE 71
-#define ID_IDENTIFIER_RULE 72
-#define TRUE_RULE 73
-#define FALSE_RULE 74
-#define CHARACTER_RULE 75
-#define STRINGVAL_RULE 76
-#define NUMERAL_RULE 77
+#define TYPE_IDD_EQUALS_ARRAY_NT_NUM_OF_TP_RULE 6  // DT -> TYPE IDD EQUALS ARRAY LEFT_SQUARE NT_NUM RIGHT_SQUARE OF TP
+#define TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE 7        // DT -> TYPE IDD EQUALS STRUCT NB LEFT_BRACES DC RIGHT_BRACES
+#define TYPE_IDD_EQUALS_TP_RULE 8                  // DT -> TYPE IDD EQUALS TP
+
+#define INTEGER_RULE 9                             // TP -> INTEGER
+#define CHAR_RULE 10                               // TP -> CHAR
+#define BOOLEAN_RULE 11                            // TP -> BOOLEAN
+#define STRING_RULE 12                             // TP -> STRING
+#define TP_IDU_RULE 13                             // TP -> IDU
+
+#define DC_LI_TP_RULE 14                           // DC -> DC SEMI_COLON LI COLON TP
+#define LI_TP_RULE 15                              // DC -> LI COLON TP
+
+#define FUNCTION_IDD_NB_LP_TP_B_RULE 16            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP B
+
+#define LP_IDD_TP_RULE 17                          // LP -> LP COMMA IDD COLON TP
+#define IDD_TP_RULE 18                             // LP -> IDD COLON TP
+
+#define LDV_LS_RULE 19                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
+
+#define LDV_DV_RULE 20                             // LDV -> LDV DV
+#define DV_RULE 21                                 // LDV -> DV
+
+#define LS_S_RULE 22                               // LS -> LS S
+#define S_RULE 23                                  // LS -> S
+
+#define VAR_LI_TP_RULE 24                          // DV -> VAR LI COLON TP SEMI_COLON
+
+#define LI_IDD_RULE 25                             // LI -> LI COMMA IDD
+#define IDD_RULE 26                                // LI -> IDD
+
+#define IF_E_S_RULE 27                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
+#define IF_E_S_ELSE_S_RULE 28                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
+#define WHILE_E_S_RULE 29                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
+#define DO_S_WHILE_E_RULE 30                       // S -> DO S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
+#define B_RULE 31                                  // S -> B
+#define LV_EQUALS_E_RULE 32                        // S -> LV EQUALS E SEMI_COLON
+#define BREAK_RULE 33                              // S -> BREAK SEMI_COLON
+#define CONTINUE_RULE 34                           // S -> CONTINUE SEMI_COLON
+
+#define E_AND_L_RULE 35                            // E -> E AND L
+#define E_OR_L_RULE 36                             // E -> E OR L
+#define L_RULE 37                                  // E -> L
+
+#define L_LESS_THAN_R_RULE 38                      // L -> L LESS_THAN R
+#define L_GREATER_THAN_R_RULE 39                   // L -> L GREATER_THAN R
+#define L_LESS_OR_EQUAL_R_RULE 40                  // L -> L LESS_OR_EQUAL R
+#define L_GREATER_OR_EQUAL_R_RULE 41               // L -> L GREATER_OR_EQUAL R
+#define L_EQUAL_EQUAL_R_RULE 42                    // L -> L EQUAL_EQUAL R
+#define L_NOT_EQUAL_R_RULE 43                      // L -> L NOT_EQUAL R
+#define R_RULE 44                                  // L -> R
+
+#define R_PLUS_TM_RULE 45                          // R -> R PLUS TM
+#define R_MINUS_TM_RULE 46                         // R -> R MINUS TM
+#define TM_RULE 47                                 // R -> TM
+
+#define TM_TIMES_F_RULE 48                         // TM -> TM TIMES F
+#define TM_DIVIDE_F_RULE 49                        // TM -> TM DIVIDE F
+#define F_RULE 50                                  // TM -> F
+
+#define LV_RULE 51                                 // F -> LV
+#define PLUS_PLUS_LV_RULE 52                       // F -> PLUS_PLUS LV
+#define MINUS_MINUS_LV_RULE 53                     // F -> MINUS_MINUS LV
+#define LV_PLUS_PLUS_RULE 54                       // F -> LV PLUS_PLUS
+#define LV_MINUS_MINUS_RULE 55                     // F -> LV MINUS_MINUS
+#define F_E_RULE 56                                // F -> LEFT_PARENTHESIS E RIGHT_PARENTHESIS
+#define IDU_LE_RULE 57                             // F -> IDU LEFT_PARENTHESIS LE RIGHT_PARENTHESIS
+#define MINUS_F_RULE 58                            // F -> MINUS F
+#define NOT_F_RULE 59                              // F -> NOT F
+#define NT_TRUE_RULE 60                            // F -> NT_TRUE
+#define NT_FALSE_RULE 61                           // F -> NT_FALSE
+#define NT_CHR_RULE 62                             // F -> NT_CHR
+#define NT_STR_RULE 63                             // F -> NT_STR
+#define NT_NUM_RULE 64                             // F -> NT_NUM
+
+#define LE_COMMA_E_RULE 65                         // LE -> LE COMMA E
+#define LE_E_RULE 66                               // LE -> E
+
+#define LV_DOT_ID_RULE 67                          // LV -> LV DOT ID
+#define LV_E_RULE 68                               // LV -> LV LEFT_SQUARE E RIGHT_SQUARE
+#define LV_IDU_RULE 69                             // LV -> IDU
+
+#define IDD_IDENTIFIER_RULE 70                     // IDD -> IDENTIFIER
+#define IDU_IDENTIFIER_RULE 71                     // IDU -> IDENTIFIER
+#define ID_IDENTIFIER_RULE 72                      // ID -> IDENTIFIER
+
+#define TRUE_RULE 73                               // NT_TRUE -> TRUE
+#define FALSE_RULE 74                              // NT_FALSE -> FALSE
+#define CHARACTER_RULE 75                          // NT_CHR -> CHARACTER
+#define STRINGVAL_RULE 76                          // NT_STR -> STRINGVAL
+#define NUMERAL_RULE 77                            // NT_NUM -> NUMERAL
