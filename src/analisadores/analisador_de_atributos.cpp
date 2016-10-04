@@ -88,7 +88,6 @@ void semantics(int rule){
             IDU_.nont = IDU;
             IDU_._.ID.name = name;
             
-            //cout << "TOKENSECUNDARIO" << name << endl;
             if((p = Find(name)) == NULL){
                 Error(ERR_NO_DECL);
                 p = Define(name);
@@ -103,6 +102,14 @@ void semantics(int rule){
             ID_._.ID.obj = NULL;
             StackSem.push(ID_);
             break;
-
+        case NB_RULE:
+            NewBlock();
+            break;
+        case TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE:
+            EndBlock();
+        case FUNCTION_IDD_NB_LP_TP_B_RULE:
+            EndBlock();
+        default:
+            break;
         }
 }
