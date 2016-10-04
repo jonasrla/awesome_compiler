@@ -1,11 +1,12 @@
 #include "analisador_de_atributos.h"
 #include <iostream>
 #include <stack>
+#include "analisador_de_escopo.cpp"
 
 
 
 
-/*Global Variables*/
+/*Global Variables*/ 
 
 /*Output File*/
 extern FILE *out;
@@ -18,10 +19,8 @@ stack<t_attrib> StackSem;
 
 int nFuncs = 0;
 pobject curFunction;
-/*Symbol Tables*/
-pobject SymbolTable[MAX_NEST_LEVEL];
-pobject SymbolTableLast[MAX_NEST_LEVEL];
-int nCurrentLevel = 0;
+
+//int nCurrentLevel = 0; //TIREI PQ TAVA DANDO CONFLITO DE REDECLARAÇÃO - JA TINHA SIDO DECLARADA NO ANALISADOR DE ESCOPO
 
 //SCALAR TYPES
 
