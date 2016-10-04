@@ -9,7 +9,6 @@
 /*Global Variables*/ 
 
 /*Output File*/
-extern FILE *out;
 bool hasError = false;
 fpos_t functionVarPos;
 /*Semantic Stack*/
@@ -197,7 +196,7 @@ void semantics(int rule){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
             
-            fprintf(out,"L%d\n",MT_._.MT.label);
+            // fprintf(out,"L%d\n",MT_._.MT.label);
             
             break;
     }
