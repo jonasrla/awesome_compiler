@@ -1,5 +1,6 @@
 #include "analisador_sintatico.h"
 #include "analisador_lexico.h"
+#include "analisador_de_atributos.h"
 
 #include <cstring>
 #include "csv.h"
@@ -163,7 +164,7 @@ void parse(){
                 r = RULE(p);
                 POP(LEN[r]);
                 PUSH(Action[TOP()][LEFT[r]]);
-                // Semantics(r);
+                semantics(r);
             } else {
                 SyntaxError();
             }
