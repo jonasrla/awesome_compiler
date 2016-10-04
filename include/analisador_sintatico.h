@@ -35,7 +35,7 @@ void parse();
 #define TYPE_IDD_EQUALS_TP_RULE 7                  // DT -> TYPE IDD EQUALS TP
 
 #define INTEGER_RULE 8                             // TP -> INTEGER
-#define CHAR_RULE 9                               // TP -> CHAR
+#define CHAR_RULE 9                                // TP -> CHAR
 #define BOOLEAN_RULE 10                            // TP -> BOOLEAN
 #define STRING_RULE 11                             // TP -> STRING
 #define TP_IDU_RULE 12                             // TP -> IDU
