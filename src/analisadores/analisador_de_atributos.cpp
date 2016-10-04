@@ -1,7 +1,7 @@
 #include "analisador_de_atributos.h"
 #include <iostream>
 #include <stack>
-#include "analisador_de_escopo.cpp"
+#include "analisador_de_escopo.h"
 
 
 
