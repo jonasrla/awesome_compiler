@@ -65,9 +65,9 @@ void Error(errorcode code){
 }
 
 void semantics(int rule){
-    static int name,n,l,l1,l2;
-    static pobject p,t,f;
-    static t_attrib IDD_,IDU_,ID_,T_,LI_,LI0_,LI1_,TRU_,FALS_,STR_,CHR_,NUM_,DC_,DC0_,DC1_,LP_,LP0_,LP1_,E_,E0_,E1_,L_,L0_,L1_,R_,R0_,R1_,K_,K0_,K1_,F_,F0_,F1_,LV_,LV0_,LV1_,MC_,LE_,LE0_,LE1_,MT_,ME_,MW_;
+    static int name;//,n,l,l1,l2;
+    static pobject p;//,t,f;
+    static t_attrib IDD_,IDU_,ID_;//T_,LI_,LI0_,LI1_,TRU_,FALS_,STR_,CHR_,NUM_,DC_,DC0_,DC1_,LP_,LP0_,LP1_,E_,E0_,E1_,L_,L0_,L1_,R_,R0_,R1_,K_,K0_,K1_,F_,F0_,F1_,LV_,LV0_,LV1_,MC_,LE_,LE0_,LE1_,MT_,ME_,MW_;
     switch(rule){
         case IDD_IDENTIFIER_RULE:
             name = tokenSecundario;
