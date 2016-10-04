@@ -8,6 +8,7 @@
 #include <vector>
 #include <errno.h>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ int column = 0;
 int row = 0;
 
 void SyntaxError(){
-    printf("Deu ruim!\n");
+    std::cout << "Ocorreu um erro de sintaxe na linha: " << currentLine << std::endl;
     exit(1);
 }
 
