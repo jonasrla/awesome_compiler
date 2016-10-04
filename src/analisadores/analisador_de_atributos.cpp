@@ -2,9 +2,44 @@
 #include <iostream>
 #include <stack>
 
-stack<t_attrib> StackSem;
 
+
+
+/*Global Variables*/
+
+/*Output File*/
+extern FILE *out;
 bool hasError = false;
+fpos_t functionVarPos;
+/*Semantic Stack*/
+
+stack<t_attrib> StackSem;
+/*Functions*/
+
+int nFuncs = 0;
+pobject curFunction;
+/*Symbol Tables*/
+pobject SymbolTable[MAX_NEST_LEVEL];
+pobject SymbolTableLast[MAX_NEST_LEVEL];
+int nCurrentLevel = 0;
+
+//SCALAR TYPES
+
+object int_ = {-1, NULL, SCALAR_TYPE_};
+pobject pInt = &int_;
+
+object char_ = {-1, NULL, SCALAR_TYPE_};
+pobject pChar = &char_;
+
+object bool_ = {-1, NULL, SCALAR_TYPE_};
+pobject pBool = &bool_;
+
+object string_ = {-1, NULL, SCALAR_TYPE_};
+pobject pString = &string_;
+
+object universal_ = {-1, NULL, SCALAR_TYPE_};
+
+pobject pUniversal = &universal_;
 
 void Error(errorcode code){
     hasError = true;
@@ -64,6 +99,51 @@ void Error(errorcode code){
     std::cout << std::endl;
 }
 
+bool CheckTypes(pobject t1,pobject t2){
+    if(t1 == t2){
+        return true;
+    }
+    else if(t1 == pUniversal || t2 == pUniversal){
+        return true;
+    }
+    else if(t1->eKind == UNIVERSAL_ || t2->eKind == UNIVERSAL_){
+        return true;
+    }
+    else if(t1->eKind == ALIAS_TYPE_ && t2->eKind != ALIAS_TYPE_){
+        return CheckTypes(t1->_.Alias.pBaseType,t2);
+    }
+    else if(t1->eKind != ALIAS_TYPE_ && t2->eKind == ALIAS_TYPE_){
+        return CheckTypes(t1,t2->_.Alias.pBaseType);
+    }
+    else if(t1->eKind == t2->eKind){
+        //alias
+        if(t1->eKind == ALIAS_TYPE_){
+            return CheckTypes(t1->_.Alias.pBaseType,t2->_.Alias.pBaseType);
+        }
+        //array
+        else if(t1->eKind == ARRAY_TYPE_){
+            if(t1->_.Array.nNumElems == t2->_.Array.nNumElems){
+                return CheckTypes(t1->_.Array.pElemType,t2->_.Array.pElemType);
+            }
+        }
+        //struct
+        else if(t1->eKind == STRUCT_TYPE_){
+            pobject f1 = t1->_.Struct.pFields;
+            pobject f2 = t2->_.Struct.pFields;
+            
+            while( f1 != NULL && f2 != NULL){
+                if( ! CheckTypes(f1->_.Field.pType,f2->_.Field.pType)){
+                    return false;
+                }
+            }
+            return (f1 == NULL && f2 == NULL);
+        }
+    }
+    
+    return false;
+}
+
+
 void semantics(int rule){
     static int name,n,l,l1,l2;
     static pobject p,t,f;
@@ -104,5 +184,22 @@ void semantics(int rule){
             StackSem.push(ID_);
             break;
 
-        }
+
+
+
+        case IF_E_S_RULE:
+            MT_ = StackSem.top();
+            StackSem.pop();
+            E_ = StackSem.top();
+            StackSem.pop();
+            
+            t = E_._.E.type;
+            if( !CheckTypes(t,pBool)){
+                Error(ERR_BOOL_TYPE_EXPECTED);
+            }
+            
+            fprintf(out,"L%d\n",MT_._.MT.label);
+            
+            break;
+    }
 }
