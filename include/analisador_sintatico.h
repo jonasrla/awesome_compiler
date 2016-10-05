@@ -25,7 +25,7 @@
 #endif
 
 typedef enum{
-    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB
+    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC
 } t_nterm;
 
 void parse();
@@ -43,7 +43,7 @@ void parse();
 #define DC_LI_TP_RULE 13                           // DC -> DC SEMI_COLON LI COLON TP
 #define LI_TP_RULE 14                              // DC -> LI COLON TP
 
-#define FUNCTION_IDD_NB_LP_TP_B_RULE 15            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP B
+#define FUNCTION_IDD_NB_LP_TP_B_RULE 15            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
 
 #define LP_IDD_TP_RULE 16                          // LP -> LP COMMA IDD COLON TP
 #define IDD_TP_RULE 17                             // LP -> IDD COLON TP
@@ -96,7 +96,7 @@ void parse();
 #define LV_PLUS_PLUS_RULE 53                       // F -> LV PLUS_PLUS
 #define LV_MINUS_MINUS_RULE 54                     // F -> LV MINUS_MINUS
 #define F_E_RULE 55                                // F -> LEFT_PARENTHESIS E RIGHT_PARENTHESIS
-#define IDU_LE_RULE 56                             // F -> IDU LEFT_PARENTHESIS LE RIGHT_PARENTHESIS
+#define IDU_LE_RULE 56                             // F -> IDU MC LEFT_PARENTHESIS LE RIGHT_PARENTHESIS
 #define MINUS_F_RULE 57                            // F -> MINUS F
 #define NOT_F_RULE 58                              // F -> NOT F
 #define NT_TRUE_RULE 59                            // F -> NT_TRUE
@@ -123,3 +123,5 @@ void parse();
 #define NUMERAL_RULE 76                            // NT_NUM -> NUMERAL
 
 #define NB_RULE 77									// NB -> ''
+#define MF_RULE 78									// MF -> ''
+#define MC_RULE 79									// MC -> ''
