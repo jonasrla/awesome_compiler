@@ -164,49 +164,49 @@ void semantics(int rule){
             break;
 
         case TYPE_IDD_EQUALS_TP_RULE:                  // DT -> TYPE IDD EQUALS TP
-
+        //TODO
 
 
             break;
 
         case INTEGER_RULE:                             // TP -> INTEGER
-
+        //TODO
 
 
             break;
 
         case CHAR_RULE:                                // TP -> CHAR
-
+        //TODO
 
 
             break;
 
         case BOOLEAN_RULE:                            // TP -> BOOLEAN
-
+        //TODO
 
 
             break;
 
         case STRING_RULE:                             // TP -> STRING
-
+        //TODO
 
 
             break;
 
         case TP_IDU_RULE:                             // TP -> IDU
-
+        //TODO
 
 
             break;
 
         case DC_LI_TP_RULE:                           // DC -> DC SEMI_COLON LI COLON TP
-
+        //TODO
 
 
             break;
 
         case LI_TP_RULE:                              // DC -> LI COLON TP
-
+        //TODO
 
 
             break;
@@ -218,61 +218,61 @@ void semantics(int rule){
             break;
 
         case LP_IDD_TP_RULE:                          // LP -> LP COMMA IDD COLON TP
-
+        //TODO
 
 
             break;
 
         case IDD_TP_RULE:                             // LP -> IDD COLON TP
-
+        //TODO
 
 
             break;
 
         case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
-
+        //TODO
 
 
             break;
 
         case LDV_DV_RULE:                             // LDV -> LDV DV
-
+        //TODO
 
 
             break;
 
         case DV_RULE:                                 // LDV -> DV
-
+        //TODO
 
 
             break;
 
         case LS_S_RULE:                               // LS -> LS S
-
+        //TODO
 
 
             break;
 
         case S_RULE:                                  // LS -> S
-
+        //TODO
 
 
             break;
 
         case VAR_LI_TP_RULE:                          // DV -> VAR LI COLON TP SEMI_COLON
-
+        //TODO
 
 
             break;
 
         case LI_IDD_RULE:                             // LI -> LI COMMA IDD
-
+        //TODO
 
 
             break;
 
         case IDD_RULE:                                // LI -> IDD
-
+        //TODO
 
 
             break;
@@ -292,175 +292,175 @@ void semantics(int rule){
             break;
 
         case IF_E_S_ELSE_S_RULE:                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
-
+        //TODO
 
 
             break;
 
         case WHILE_E_S_RULE:                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
-
+        //TODO
 
 
             break;
 
         case DO_S_WHILE_E_RULE:                       // S -> DO S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
-
+        //TODO
 
 
             break;
 
         case B_RULE:                                  // S -> B
-
+        //TODO
 
 
             break;
 
         case LV_EQUALS_E_RULE:                        // S -> LV EQUALS E SEMI_COLON
-
+        //TODO
 
 
             break;
 
         case BREAK_RULE:                              // S -> BREAK SEMI_COLON
-
+        //TODO
 
 
             break;
 
         case CONTINUE_RULE:                           // S -> CONTINUE SEMI_COLON
-
+        //TODO
 
 
             break;
 
         case E_AND_L_RULE:                            // E -> E AND L
-
+        //TODO
 
 
             break;
 
         case E_OR_L_RULE:                             // E -> E OR L
-
+        //TODO
 
 
             break;
 
         case L_RULE:                                  // E -> L
-
+        //TODO
 
 
             break;
 
         case L_LESS_THAN_R_RULE:                      // L -> L LESS_THAN R
-
+        //TODO
 
 
             break;
 
         case L_GREATER_THAN_R_RULE:                   // L -> L GREATER_THAN R
-
+        //TODO
 
 
             break;
 
         case L_LESS_OR_EQUAL_R_RULE:                  // L -> L LESS_OR_EQUAL R
-
+        //TODO
 
 
             break;
 
         case L_GREATER_OR_EQUAL_R_RULE:               // L -> L GREATER_OR_EQUAL R
-
+        //TODO
 
 
             break;
 
         case L_EQUAL_EQUAL_R_RULE:                    // L -> L EQUAL_EQUAL R
-
+        //TODO
 
 
             break;
 
         case L_NOT_EQUAL_R_RULE:                      // L -> L NOT_EQUAL R
-
+        //TODO
 
 
             break;
 
         case R_RULE:                                  // L -> R
-
+        //TODO
 
 
             break;
 
         case R_PLUS_TM_RULE:                          // R -> R PLUS TM
-
+        //TODO
 
 
             break;
 
         case R_MINUS_TM_RULE:                         // R -> R MINUS TM
-
+        //TODO
 
 
             break;
 
         case TM_RULE:                                 // R -> TM
-
+        //TODO
 
 
             break;
 
         case TM_TIMES_F_RULE:                         // TM -> TM TIMES F
-
+        //TODO
 
 
             break;
 
         case TM_DIVIDE_F_RULE:                        // TM -> TM DIVIDE F
-
+        //TODO
 
 
             break;
 
         case F_RULE:                                  // TM -> F
-
+        //TODO
 
 
             break;
 
         case LV_RULE:                                 // F -> LV
-
+        //TODO
 
 
             break;
 
         case PLUS_PLUS_LV_RULE:                       // F -> PLUS_PLUS LV
-
+        //TODO
 
 
             break;
 
         case MINUS_MINUS_LV_RULE:                     // F -> MINUS_MINUS LV
-
+        //TODO
 
 
             break;
 
         case LV_PLUS_PLUS_RULE:                       // F -> LV PLUS_PLUS
-
+        //TODO
 
 
             break;
 
         case LV_MINUS_MINUS_RULE:                     // F -> LV MINUS_MINUS
-
+        //TODO
 
 
             break;
 
         case F_E_RULE:                                // F -> LEFT_PARENTHESIS E RIGHT_PARENTHESIS
-
+        //TODO
 
 
             break;
@@ -490,73 +490,73 @@ void semantics(int rule){
             break;
 
         case MINUS_F_RULE:                            // F -> MINUS F
-
+        //TODO
 
 
             break;
 
         case NOT_F_RULE:                              // F -> NOT F
-
+        //TODO
 
 
             break;
 
         case NT_TRUE_RULE:                            // F -> NT_TRUE
-
+        //TODO
 
 
             break;
 
         case NT_FALSE_RULE:                           // F -> NT_FALSE
-
+        //TODO
 
 
             break;
 
         case NT_CHR_RULE:                             // F -> NT_CHR
-
+        //TODO
 
 
             break;
 
         case NT_STR_RULE:                             // F -> NT_STR
-
+        //TODO
 
 
             break;
 
         case NT_NUM_RULE:                             // F -> NT_NUM
-
+        //TODO
 
 
             break;
 
         case LE_COMMA_E_RULE:                         // LE -> LE COMMA E
-
+        //TODO
 
 
             break;
 
         case LE_E_RULE:                               // LE -> E
-
+        //TODO
 
 
             break;
 
         case LV_DOT_ID_RULE:                          // LV -> LV DOT ID
-
+        //TODO
 
 
             break;
 
         case LV_E_RULE:                               // LV -> LV LEFT_SQUARE E RIGHT_SQUARE
-
+        //TODO
 
 
             break;
 
         case LV_IDU_RULE:                             // LV -> IDU
-
+        //TODO
 
 
             break;
@@ -603,31 +603,31 @@ void semantics(int rule){
             break;
 
         case TRUE_RULE:                               // NT_TRUE -> TRUE
-
+        //TODO
 
 
             break;
 
         case FALSE_RULE:                              // NT_FALSE -> FALSE
-
+        //TODO
 
 
             break;
 
         case CHARACTER_RULE:                          // NT_CHR -> CHARACTER
-
+        //TODO
 
 
             break;
 
         case STRINGVAL_RULE:                          // NT_STR -> STRINGVAL
-
+        //TODO
 
 
             break;
 
         case NUMERAL_RULE:                            // NT_NUM -> NUMERAL
-
+        //TODO
 
 
             break;
@@ -639,16 +639,17 @@ void semantics(int rule){
             break;
 
         case MF_RULE:                                   // MF -> ''
-
+        //TODO
 
 
             break;
 
         case MC_RULE:                                   // MC -> ''
-
+        //TODO
 
 
             break;
+            
         default:
             break;
     }
