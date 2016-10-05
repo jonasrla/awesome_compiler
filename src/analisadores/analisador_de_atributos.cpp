@@ -134,8 +134,8 @@ bool CheckTypes(pobject t1,pobject t2){
 
 void semantics(int rule){
     static int name;//,n,l,l1,l2;
-    static pobject p,f;//,t;
-    static t_attrib IDD_,IDU_,ID_,MC_,LE_,F_,DC_;//,T_,LI_,LI0_,LI1_,TRU_,FALS_,STR_,CHR_,NUM_,DC0_,DC1_,LP_,LP0_,LP1_,E_,E0_,E1_,L_,L0_,L1_,R_,R0_,R1_,K_,K0_,K1_,F0_,F1_,LV_,LV0_,LV1_,LE0_,LE1_,MT_,ME_,MW_;
+    static pobject p,f,t;
+    static t_attrib IDD_,IDU_,ID_,MC_,LE_,F_,DC_,MT_,T_,LI_,LI0_,LI1_,TRU_,FALS_,STR_,CHR_,NUM_,DC0_,DC1_,LP_,LP0_,LP1_,E_,E0_,E1_,L_,L0_,L1_,R_,R0_,R1_,K_,K0_,K1_,F0_,F1_,LV_,LV0_,LV1_,LE0_,LE1_,ME_,MW_;
     switch(rule){
         case IDD_IDENTIFIER_RULE:
             name = tokenSecundario;
@@ -210,7 +210,70 @@ void semantics(int rule){
             }
             F_.nont = F;
             StackSem.push_front(F_);
+
+        case TYPE_IDD_EQUALS_ARRAY_NT_NUM_OF_TP_RULE:
+            T_ = StackSem.front();
+            StackSem.pop_front();
+            IDD_ = StackSem.front();
+            StackSem.pop_front();
+            p = IDD_._.ID.obj;
+            t = T_._.T.type;
+            p->eKind = ALIAS_TYPE_;
+            p->_.Alias.pBaseType = t;
+            break;
+
+        case TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE:
+            DC_ = StackSem.front();
+            StackSem.pop_front();
+            IDD_ = StackSem.front();
+            StackSem.pop_front();
+            p = IDD_._.ID.obj;
+            p->eKind = STRUCT_TYPE_;
+            p->_.Struct.pFields = DC_._.DC.list;
+            EndBlock();
+          break;
+        
+        case DC_LI_TP_RULE:
+            T_ = StackSem.front();
+            StackSem.pop_front();
+            LI_ = StackSem.front();
+            StackSem.pop_front();
+            p = LI_._.LI.list;
+            t = T_._.T.type;
+            while( p != NULL && p->eKind == NO_KIND_DEF_ ) {
+                p->eKind = FIELD_;
+                p->_.Field.pType = t;
+                p = p->pNext;
+            }
+            DC_._.DC.list = LI_._.LI.list;
+            DC_.nont = DC;
+            StackSem.push_front(DC_);
+            break;
+
+        case LI_TP_RULE:
+            T_ = StackSem.front();
+            StackSem.pop_front();
+            LI_ = StackSem.front();
+            StackSem.pop_front();
+            DC1_ = StackSem.front();
+            StackSem.pop_front();
+            p = LI_._.LI.list;
+            t = T_._.T.type;
+            while( p != NULL && p->eKind == NO_KIND_DEF_ ) {
+                p->eKind = FIELD_;
+                p->_.Field.pType = t;
+                p = p->pNext;
+            }
+            DC0_._.DC.list = DC1_._.DC.list;
+            p = DC0_._.DC.list;
+            while ( p!=NULL && p->pNext != NULL) {
+                p = p->pNext;
+            }
+            p->pNext = LI_._.LI.list;
+            DC0_.nont = DC;
+            StackSem.push_front(DC0_);
+            break;
         default:
             break;
-        }
+    }
 }
