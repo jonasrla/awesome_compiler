@@ -1,5 +1,6 @@
 #include "analisador_sintatico.h"
 #include "analisador_lexico.h"
+#include "analisador_de_atributos.h"
 
 #include <cstring>
 #include "csv.h"
@@ -7,6 +8,7 @@
 #include <vector>
 #include <errno.h>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
@@ -22,7 +24,7 @@ int column = 0;
 int row = 0;
 
 void SyntaxError(){
-    printf("Deu ruim!\n");
+    std::cout << "Ocorreu um erro de sintaxe na linha: " << currentLine << std::endl;
     exit(1);
 }
 
@@ -163,7 +165,7 @@ void parse(){
                 r = RULE(p);
                 POP(LEN[r]);
                 PUSH(Action[TOP()][LEFT[r]]);
-                // Semantics(r);
+                semantics(r);
             } else {
                 SyntaxError();
             }
