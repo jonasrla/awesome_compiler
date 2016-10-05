@@ -1,13 +1,14 @@
 #include "analisador_de_atributos.h"
 #include <iostream>
-#include <stack>
+#include <list>
 #include "analisador_de_escopo.h"
 
 
 bool hasError = false;
 fpos_t functionVarPos;
 
-stack<t_attrib> StackSem;
+list<t_attrib> StackSem;
+
 
 int nFuncs = 0;
 pobject curFunction;
@@ -148,7 +149,7 @@ void semantics(int rule){
             }
             p->eKind = NO_KIND_DEF_;
             IDD_._.ID.obj = p;
-            StackSem.push(IDD_);
+            StackSem.push_front(IDD_);
             break;
         case IDU_IDENTIFIER_RULE:
             name = tokenSecundario;
@@ -160,58 +161,43 @@ void semantics(int rule){
                 p = Define(name);
             }
             IDU_._.ID.obj = p;
-            StackSem.push(IDU_);
+            StackSem.push_front(IDU_);
             break;
         case ID_IDENTIFIER_RULE:
             ID_.nont = ID;
             name = tokenSecundario;
             ID_._.ID.name = name;
             ID_._.ID.obj = NULL;
-            StackSem.push(ID_);
+            StackSem.push_front(ID_);
             break;
 
-
-
-
         case IF_E_S_RULE:
-            MT_ = StackSem.top();
-            StackSem.pop();
-            E_ = StackSem.top();
-            StackSem.pop();
+            MT_ = StackSem.front();
+            StackSem.pop_front();
+            E_ = StackSem.front();
+            StackSem.pop_front();
             
             t = E_._.E.type;
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
             
-            // fprintf(out,"L%d\n",MT_._.MT.label);
             
             break;
-    }
         case NB_RULE:
             NewBlock();
             break;
-        case TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE:
-            DC_ = StackSem.top();
-            StackSem.pop();
-            IDD_ = StackSem.top();
-            StackSem.pop();
-            
-            p = IDD_._.ID.obj;
-            p->eKind = STRUCT_TYPE_;
-            p->_.Struct.pFields = DC_._.DC.list;
-            p->_.Struct.nSize = DC_.nSize;
-            // EndBlock(); 
         case FUNCTION_IDD_NB_LP_TP_B_RULE:
             EndBlock();
+
         case IDU_LE_RULE:
             std::cout << "IDU_LE_RULE " << currentLine << std::endl;
-            LE_ = StackSem.top();
-            StackSem.pop();
-            MC_ = StackSem.top();
-            StackSem.pop();
-            IDU_ = StackSem.top();
-            StackSem.pop();
+            LE_ = StackSem.front();
+            StackSem.pop_front();
+            MC_ = StackSem.front();
+            StackSem.pop_front();
+            IDU_ = StackSem.front();
+            StackSem.pop_front();
             f = IDU_._.ID.obj;
             F_._.F.type = MC_._.MC.type;
             if(!LE_._.LE.err){
@@ -223,7 +209,7 @@ void semantics(int rule){
                 }
             }
             F_.nont = F;
-            StackSem.push(F_);
+            StackSem.push_front(F_);
         default:
             break;
         }
