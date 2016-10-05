@@ -4,24 +4,13 @@
 #include "analisador_de_escopo.h"
 
 
-
-
-/*Global Variables*/ 
-
-/*Output File*/
 bool hasError = false;
 fpos_t functionVarPos;
-/*Semantic Stack*/
 
 stack<t_attrib> StackSem;
-/*Functions*/
 
 int nFuncs = 0;
 pobject curFunction;
-
-//int nCurrentLevel = 0; //TIREI PQ TAVA DANDO CONFLITO DE REDECLARAÇÃO - JA TINHA SIDO DECLARADA NO ANALISADOR DE ESCOPO
-
-//SCALAR TYPES
 
 object int_ = {-1, NULL, SCALAR_TYPE_};
 pobject pInt = &int_;
