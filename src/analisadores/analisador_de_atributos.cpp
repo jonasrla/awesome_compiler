@@ -66,8 +66,8 @@ void Error(errorcode code){
 
 void semantics(int rule){
     static int name;//,n,l,l1,l2;
-    static pobject p;//,t,f;
-    static t_attrib IDD_,IDU_,ID_;//T_,LI_,LI0_,LI1_,TRU_,FALS_,STR_,CHR_,NUM_,DC_,DC0_,DC1_,LP_,LP0_,LP1_,E_,E0_,E1_,L_,L0_,L1_,R_,R0_,R1_,K_,K0_,K1_,F_,F0_,F1_,LV_,LV0_,LV1_,MC_,LE_,LE0_,LE1_,MT_,ME_,MW_;
+    static pobject p,f;//,t;
+    static t_attrib IDD_,IDU_,ID_,MC_,LE_,F_,DC_;//,T_,LI_,LI0_,LI1_,TRU_,FALS_,STR_,CHR_,NUM_,DC0_,DC1_,LP_,LP0_,LP1_,E_,E0_,E1_,L_,L0_,L1_,R_,R0_,R1_,K_,K0_,K1_,F0_,F1_,LV_,LV0_,LV1_,LE0_,LE1_,MT_,ME_,MW_;
     switch(rule){
         case IDD_IDENTIFIER_RULE:
             name = tokenSecundario;
@@ -106,9 +106,38 @@ void semantics(int rule){
             NewBlock();
             break;
         case TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE:
-            EndBlock();
+            DC_ = StackSem.top();
+            StackSem.pop();
+            IDD_ = StackSem.top();
+            StackSem.pop();
+            
+            p = IDD_._.ID.obj;
+            p->eKind = STRUCT_TYPE_;
+            p->_.Struct.pFields = DC_._.DC.list;
+            p->_.Struct.nSize = DC_.nSize;
+            // EndBlock(); 
         case FUNCTION_IDD_NB_LP_TP_B_RULE:
             EndBlock();
+        case IDU_LE_RULE:
+            std::cout << "IDU_LE_RULE " << currentLine << std::endl;
+            LE_ = StackSem.top();
+            StackSem.pop();
+            MC_ = StackSem.top();
+            StackSem.pop();
+            IDU_ = StackSem.top();
+            StackSem.pop();
+            f = IDU_._.ID.obj;
+            F_._.F.type = MC_._.MC.type;
+            if(!LE_._.LE.err){
+                if(LE_._.LE.n-1 < f->_.Function.nParams && LE_._.LE.n != 0){
+                    Error(ERR_TOO_FEW_ARGS);
+                }
+               else if(LE_._.LE.n-1 > f->_.Function.nParams){
+                    Error(ERR_TOO_MANY_ARGS);
+                }
+            }
+            F_.nont = F;
+            StackSem.push(F_);
         default:
             break;
         }
