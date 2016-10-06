@@ -1016,7 +1016,7 @@ void semantics(int rule){
             NUM_ = StackSem.front();
             StackSem.pop_front();
             
-            F_._.F.type = pChar;
+            F_._.F.type = pInt;
             F_.nont = F;
             StackSem.push_front(F_);
 
