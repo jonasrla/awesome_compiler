@@ -7,7 +7,6 @@
 extern bool hasError;
 
 
-#define MAX_NEST_LEVEL 50
 #define IS_TYPE_KIND(k) ((k)==ARRAY_TYPE_ || \
 (k)==STRUCT_TYPE_|| \
 (k)==ALIAS_TYPE_ || \

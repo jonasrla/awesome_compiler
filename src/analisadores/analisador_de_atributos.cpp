@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stack>
 #include "analisador_de_escopo.h"
-
+#include <list>
 
 
 
@@ -13,7 +13,7 @@ bool hasError = false;
 fpos_t functionVarPos;
 /*Semantic Stack*/
 
-stack<t_attrib> StackSem;
+list<t_attrib> StackSem;
 /*Functions*/
 
 int nFuncs = 0;
@@ -159,7 +159,7 @@ void semantics(int rule){
             }
             p->eKind = NO_KIND_DEF_;
             IDD_._.ID.obj = p;
-            StackSem.push(IDD_);
+            StackSem.push_front(IDD_);
             break;
         case IDU_IDENTIFIER_RULE:
             name = tokenSecundario;
@@ -172,32 +172,158 @@ void semantics(int rule){
                 p = Define(name);
             }
             IDU_._.ID.obj = p;
-            StackSem.push(IDU_);
+            StackSem.push_front(IDU_);
             break;
+
         case ID_IDENTIFIER_RULE:
             ID_.nont = ID;
             name = tokenSecundario;
             ID_._.ID.name = name;
             ID_._.ID.obj = NULL;
-            StackSem.push(ID_);
+            StackSem.push_front(ID_);
             break;
 
 
+        case INTEGER_RULE:
+          T_._.T.type = pInt;
+          T_.nont = T;
+          //T_.nSize = 1;
+          StackSem.push_front(T_);
+          break;
+
+        case CHAR_RULE:
+          T_._.T.type = pChar;
+          T_.nont = T;
+          //T_.nSize = 1;
+          StackSem.push_front(T_);
+          break;
+
+        case BOOLEAN_RULE:
+          T_._.T.type = pBool;
+          T_.nont = T;
+          //T_.nSize = 1;
+          StackSem.push_front(T_);
+          break;
+
+        case STRING_RULE:
+          T_._.T.type = pString;
+          T_.nont = T;
+          StackSem.push_front(T_);
+          break;
+
+        case TP_IDU_RULE: //************************************
+          IDU_ = StackSem.front();
+          p = IDU_._.ID.obj;
+          StackSem.pop_front();
+          
+          if( IS_TYPE_KIND(p->eKind) || p->eKind == UNIVERSAL_) {
+            T_._.T.type = p;
+          } else {
+            T_._.T.type = pUniversal;
+            Error(ERR_TYPE_EXPECTED);
+          }
+          T_.nont = T;
+          StackSem.push_front(T_);
+          break;
+
+        case IDD_RULE:
+          IDD_ = StackSem.front();
+          StackSem.pop_front();
+          LI_.nont = LI;
+          LI_._.LI.list = IDD_._.ID.obj;
+          StackSem.push_front(LI_);
+          break;
+
+        case LI_IDD_RULE:
+          IDD_ = StackSem.front();
+          StackSem.pop_front();
+          LI1_ = StackSem.front();
+          StackSem.pop_front();
+          LI0_._.LI.list = IDD_._.ID.obj;
+          LI0_._.LI.list->pNext = LI1_._.LI.list;
+          LI0_.nont = LI;
+          StackSem.push_front(LI0_);
+          break;
+
+        case VAR_LI_TP_RULE:
+          T_ = StackSem.front();
+          StackSem.pop_front();
+          LI_ = StackSem.front();
+          StackSem.pop_front();
+          p = LI_._.LI.list;
+          t = T_._.T.type;
+          while( p != NULL && p->eKind == NO_KIND_DEF_ ) {
+            p->eKind = VAR_;
+            p->_.Var.pType = t;
+            p = p->pNext;
+            //p->_.Var.nSize = T_.nSize;
+            //p->_.Var.nIndex = n;
+            //n += T_.nSize;
+          }
+          break;
+
+        case NT_TRUE_RULE:
+          TRU_._.TRU.type = pBool;
+          TRU_._.TRU.val = true;
+          TRU_.nont = TRU;
+          StackSem.push_front(TRU_);
+          break;
+        case NT_FALSE_RULE:
+          FALS_._.FALS.type = pBool;
+          FALS_._.FALS.val = false;
+          FALS_.nont = FALS;
+          StackSem.push_front(FALS_);
+          break;
+        case NT_CHR_RULE:
+          CHR_._.CHR.type = pChar;
+          CHR_._.CHR.pos = tokenSecundario;
+          CHR_._.CHR.val = getCharConst(tokenSecundario);
+          CHR_.nont = CHR;
+          StackSem.push_front(CHR_);
+          break;
+        case STR_RULE:
+          STR_._.STR.type = pString;
+          STR_._.STR.pos = tokenSecundario;
+          STR_._.STR.val = getStringConst(tokenSecundario);
+          STR_.nont = STR;
+          StackSem.push_front(STR_);
+          break;
+        case NT_NUM_RULE:
+          NUM_._.NUM.type = pInt;
+          NUM_._.NUM.pos = tokenSecundario;
+          NUM_._.NUM.val = getIntConst(tokenSecundario);
+          NUM_.nont = NUM;
+          StackSem.push_front(NUM_);
+          break;
 
 
         case IF_E_S_RULE:
-            MT_ = StackSem.top();
-            StackSem.pop();
-            E_ = StackSem.top();
-            StackSem.pop();
+            MT_ = StackSem.front();
+            StackSem.pop_front();
+            E_ = StackSem.front();
+            StackSem.pop_front();
             
             t = E_._.E.type;
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
             
-            // fprintf(out,"L%d\n",MT_._.MT.label);
-            
             break;
+
+        case L_GREATER_THAN_R_RULE:
+            R_ = StackSem.front();
+            StackSem.pop_front();
+            L1_ = StackSem.front();
+            StackSem.pop_front();
+            
+            if( !CheckTypes(L1_._.L.type,R_._.R.type)){
+                Error(ERR_TYPE_MISMATCH);
+            }
+            L0_._.L.type = pBool;
+            L0_.nont = L;
+            StackSem.push_front(L0_);
+            break;
+
+
     }
 }

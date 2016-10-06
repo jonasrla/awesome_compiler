@@ -6,8 +6,10 @@ function fun1 ( id : string ) : integer {
 	var c : boolean;
 	var a : integer;
 	var b : integer;
+	var d : string;
 	var i : integer;
 	c = true && false;
+	c = a>d;
 
 	while( a != b)
 		i = i+1;
@@ -19,7 +21,7 @@ function fun2 ( id : string ) : integer {
 	var b : integer;
 	var x : integer;
 	c = true && false;
-	if( a>b || 12 ==x) {
+	if( a>c || 12 ==x) {
 		var i: integer;
 		i = i+1;
 	} else {
