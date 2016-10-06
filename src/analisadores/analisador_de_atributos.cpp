@@ -294,7 +294,7 @@ void semantics(int rule){
             STR_._.CONST.pos = tokenSecundario;
             STR_._.CONST.type = pChar;
             STR_._.CONST.val.s = new string(getStringConst(tokenSecundario));
-            StackSem.push_front(CHR_);
+            StackSem.push_front(STR_);
             break;
 
         case NUMERAL_RULE:                            // NT_NUM -> NUMERAL
