@@ -22,50 +22,40 @@ void Error(errorcode code);
 
 typedef struct {
     t_nterm nont;
-    int nSize;
     union {
         struct {
             pobject obj;
-            int name;}
-        ID;
+            int name;
+        } ID;
         struct {
             pobject type;
-        } T, E,L,R,K,F,LV;
+        } T,E,L,R,TM,F,LV;
+        struct{
+            pobject list;
+        } LI,DC,LP;
+        struct{
+            bool val;
+            pobject type;
+        } BOOL;
         struct {
+            pobject type;
+            int pos;
+            union {
+                int n;
+                char c;
+                string* s;
+            } val;
+        } CONST;
+        struct{
             pobject type;
             pobject param;
             bool err;
-        } MC;
-        struct {
-            int label;
-        } MT,ME,MW,MA;
+        }MC;
         struct{
             pobject type;
             pobject param;
             bool err;
             int n;
         } LE;
-        struct {
-            pobject list;
-        } LI,DC,LP;
-        struct {
-            pobject type;
-            bool val;
-        } TRU,FALS;
-        struct {
-            pobject type;
-            int pos;
-            char val;
-        } CHR;
-        struct {
-            pobject type;
-            char* val;
-            int pos;
-        } STR;
-        struct {
-            pobject type;
-            int val;
-            int pos;
-        } NUM;  
     }_;
 } t_attrib;
