@@ -380,8 +380,8 @@ void semantics(int rule){
             
             break;
 
-/* Sem */case DC_LI_TP_RULE:                           // DC -> DC SEMI_COLON LI COLON TP
-/* 2 while */                                          //TODO
+        case DC_LI_TP_RULE:                           // DC -> DC SEMI_COLON LI COLON TP
+
             TP_ = StackSem.front();
             t = TP_._.T.type;
             StackSem.pop_front();
@@ -398,9 +398,10 @@ void semantics(int rule){
                 p->_.Field.pType = t;
                 p = p->pNext;
             }
-            
-            DC0_._.DC.list = DC1_._.DC.list;
+
             DC0_.nont = DC;
+            DC0_._.DC.list = DC1_._.DC.list;
+            
             StackSem.push_front(DC0_);
 
             break;
