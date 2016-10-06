@@ -403,7 +403,9 @@ void semantics(int rule){
 
         case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
         //TODO
+        case B_RULE:                                  // S -> NB B
 
+            EndBlock();
 
             break;
 
@@ -491,12 +493,6 @@ void semantics(int rule){
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
-
-            break;
-
-        case B_RULE:                                  // S -> B
-
-            EndBlock();
 
             break;
 

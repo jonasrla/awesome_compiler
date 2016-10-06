@@ -65,7 +65,7 @@ void parse();
 #define IF_E_S_ELSE_S_RULE 27                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
 #define WHILE_E_S_RULE 28                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
 #define DO_S_WHILE_E_RULE 29                       // S -> DO S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
-#define B_RULE 30                                  // S -> B
+#define B_RULE 30                                  // S -> NB B
 #define LV_EQUALS_E_RULE 31                        // S -> LV EQUALS E SEMI_COLON
 #define BREAK_RULE 32                              // S -> BREAK SEMI_COLON
 #define CONTINUE_RULE 33                           // S -> CONTINUE SEMI_COLON
