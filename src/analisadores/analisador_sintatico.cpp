@@ -1,5 +1,6 @@
 #include "analisador_sintatico.h"
 #include "analisador_lexico.h"
+#include "analisador_de_atributos.h"
 
 #include <cstring>
 #include "csv.h"
@@ -7,22 +8,23 @@
 #include <vector>
 #include <errno.h>
 #include <unordered_map>
+#include <iostream>
 
 using namespace std;
 
 stack<int> pilhaEstado;
-int CSVdict[79];
+int CSVdict[81];
 
-vector<unordered_map<int,int>> Action(160);
+vector<unordered_map<int,int>> Action(163);
 
-int LEFT[] = {P, LDE, LDE, DE, DE, DT, DT, DT, TP, TP, TP, TP, TP, DC, DC, DF, LP, LP, B, LDV, LDV, LS, LS, DV, LI, LI, S, S, S, S, S, S, S, S, E, E, E, L, L, L, L, L, L, L, R, R, R, TM, TM, TM, F, F, F, F, F, F, F, F, F, F, F, F, F, F, LE, LE, LV, LV, LV, IDD, IDU, ID, NT_TRUE, NT_FALSE, NT_CHR, NT_STR, NT_NUM, NB};
-int LEN[] = {1, 2, 1, 1, 1, 9, 8, 4, 1, 1, 1, 1, 1, 5, 3, 9, 5, 3, 4, 2, 1, 2, 1, 5, 3, 1, 5, 7, 5, 7, 1, 4, 2, 2, 3, 3, 1, 3, 3, 3, 3, 3, 3, 1, 3, 3, 1, 3, 3, 1, 1, 2, 2, 2, 2, 3, 4, 2, 2, 1, 1, 1, 1, 1, 3, 1, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+int LEFT[] = {P, LDE, LDE, DE, DE, DT, DT, DT, TP, TP, TP, TP, TP, DC, DC, DF, LP, LP, B, LDV, LDV, LS, LS, DV, LI, LI, S, S, S, S, S, S, S, S, E, E, E, L, L, L, L, L, L, L, R, R, R, TM, TM, TM, F, F, F, F, F, F, F, F, F, F, F, F, F, F, LE, LE, LV, LV, LV, IDD, IDU, ID, NT_TRUE, NT_FALSE, NT_CHR, NT_STR, NT_NUM, NB, MF, MC};
+int LEN[] = {1, 2, 1, 1, 1, 9, 8, 4, 1, 1, 1, 1, 1, 5, 3, 10, 5, 3, 4, 2, 1, 2, 1, 5, 3, 1, 5, 7, 5, 7, 1, 4, 2, 2, 3, 3, 1, 3, 3, 3, 3, 3, 3, 1, 3, 3, 1, 3, 3, 1, 1, 2, 2, 2, 2, 3, 5, 2, 2, 1, 1, 1, 1, 1, 3, 1, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
 
 int column = 0;
 int row = 0;
 
 void SyntaxError(){
-    printf("Deu ruim!\n");
+    std::cout << "Ocorreu um erro de sintaxe na linha: " << currentLine << std::endl;
     exit(1);
 }
 
@@ -115,6 +117,8 @@ void PopulaCSVDict(){
     CSVdict[76] = NT_STR;
     CSVdict[77] = NT_NUM;
     CSVdict[78] = NB;
+    CSVdict[79] = MF;
+    CSVdict[80] = MC;
 
 }
 
@@ -163,7 +167,7 @@ void parse(){
                 r = RULE(p);
                 POP(LEN[r]);
                 PUSH(Action[TOP()][LEFT[r]]);
-                // Semantics(r);
+                semantics(r);
             } else {
                 SyntaxError();
             }
