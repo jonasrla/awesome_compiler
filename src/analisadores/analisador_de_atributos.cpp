@@ -121,7 +121,8 @@ void semantics(int rule){
                     DC0_, DC1_, LP_, LP0_, LP1_, S_, E_,  \
                     S0_, S1_, L_, E1_, E0_, L0_, L1_, R_, \
                     TM_, F_, LV_, F0_, F1_, LV0_, LV1_,   \
-                    MC_, LE_, LE0_, LE1_;
+                    MC_, LE_, LE0_, LE1_, R0_, R1_, TM0_, \
+                    TM1_;
 
     switch(rule){
 
@@ -167,6 +168,11 @@ void semantics(int rule){
 
             break;
 
+        case NB_RULE:                                   // NB -> ''
+
+            NewBlock();
+
+            break;
 
         case INTEGER_RULE:                             // TP -> INTEGER
 
@@ -254,6 +260,53 @@ void semantics(int rule){
 
             break;
 
+        case TRUE_RULE:                               // NT_TRUE -> TRUE
+
+            TRUE_.nont = NT_TRUE;
+            TRUE_._.BOOL.val = true;
+            TRUE_._.BOOL.type = pBool;
+            StackSem.push_front(TRUE_);
+
+            break;
+
+        case FALSE_RULE:                              // NT_FALSE -> FALSE
+            
+            FALSE_.nont = NT_FALSE;
+            FALSE_._.BOOL.val = false;
+            FALSE_._.BOOL.type = pBool;
+            StackSem.push_front(FALSE_);
+
+            break;
+
+        case CHARACTER_RULE:                          // NT_CHR -> CHARACTER
+
+            CHR_.nont = NT_CHR;
+            CHR_._.CONST.pos = tokenSecundario;
+            CHR_._.CONST.type = pChar;
+            CHR_._.CONST.val.c = getCharConst(tokenSecundario);
+            StackSem.push_front(CHR_);
+
+            break;
+
+        case STRINGVAL_RULE:                          // NT_STR -> STRINGVAL
+
+            STR_.nont = NT_STR;
+            STR_._.CONST.pos = tokenSecundario;
+            STR_._.CONST.type = pChar;
+            STR_._.CONST.val.s = new string(getStringConst(tokenSecundario));
+            StackSem.push_front(CHR_);
+            break;
+
+        case NUMERAL_RULE:                            // NT_NUM -> NUMERAL
+            
+            NUM_.nont = NT_CHR;
+            NUM_._.CONST.pos = tokenSecundario;
+            NUM_._.CONST.type = pInt;
+            NUM_._.CONST.val.n = getIntConst(tokenSecundario);
+            StackSem.push_front(NUM_);
+
+            break;
+
         case TYPE_IDD_EQUALS_ARRAY_NT_NUM_OF_TP_RULE:  // DT -> TYPE IDD EQUALS ARRAY LEFT_SQUARE NT_NUM RIGHT_SQUARE OF TP
 
             TP_ = StackSem.front();
@@ -274,22 +327,6 @@ void semantics(int rule){
 
             break;
 
-        case TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE:        // DT -> TYPE IDD EQUALS STRUCT NB LEFT_BRACES DC RIGHT_BRACES
-
-            DC_ = StackSem.front();
-            StackSem.pop_front();
-
-            IDD_ = StackSem.front();
-            p = IDD_._.ID.obj;
-            StackSem.pop_front();
-
-            p->eKind = STRUCT_TYPE_;
-            p->_.Struct.pFields = DC_._.DC.list;
-
-            EndBlock();
-
-            break;
-
         case TYPE_IDD_EQUALS_TP_RULE:                  // DT -> TYPE IDD EQUALS TP
 
             TP_ = StackSem.front();
@@ -305,28 +342,19 @@ void semantics(int rule){
 
             break;
 
-        case DC_LI_TP_RULE:                           // DC -> DC SEMI_COLON LI COLON TP
+        case TYPE_IDD_EQUALS_STRUCT_NB_DC_RULE:        // DT -> TYPE IDD EQUALS STRUCT NB LEFT_BRACES DC RIGHT_BRACES
 
-            TP_ = StackSem.front();
-            t = TP_._.T.type;
-            StackSem.pop_front();
-            
-            LI_ = StackSem.front();
-            p = LI_._.LI.list;
+            DC_ = StackSem.front();
             StackSem.pop_front();
 
-            DC1_ = StackSem.front();
+            IDD_ = StackSem.front();
+            p = IDD_._.ID.obj;
             StackSem.pop_front();
 
-            while (p != NULL && p->eKind == NO_KIND_DEF_){
-                p->eKind = FIELD_;
-                p->_.Field.pType = t;
-                p = p->pNext;
-            }
-            
-            DC0_._.DC.list = DC1_._.DC.list;
-            DC0_.nont = DC;
-            StackSem.push_front(DC0_);
+            p->eKind = STRUCT_TYPE_;
+            p->_.Struct.pFields = DC_._.DC.list;
+
+            EndBlock();
 
             break;
 
@@ -352,9 +380,48 @@ void semantics(int rule){
             
             break;
 
-        case FUNCTION_IDD_NB_LP_TP_B_RULE:            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
+/* Sem */case DC_LI_TP_RULE:                           // DC -> DC SEMI_COLON LI COLON TP
+/* 2 while */                                          //TODO
+            TP_ = StackSem.front();
+            t = TP_._.T.type;
+            StackSem.pop_front();
+            
+            LI_ = StackSem.front();
+            p = LI_._.LI.list;
+            StackSem.pop_front();
 
-            EndBlock();
+            DC1_ = StackSem.front();
+            StackSem.pop_front();
+
+            while (p != NULL && p->eKind == NO_KIND_DEF_){
+                p->eKind = FIELD_;
+                p->_.Field.pType = t;
+                p = p->pNext;
+            }
+            
+            DC0_._.DC.list = DC1_._.DC.list;
+            DC0_.nont = DC;
+            StackSem.push_front(DC0_);
+
+            break;
+
+        case IDD_TP_RULE:                             // LP -> IDD COLON TP
+
+            TP_ = StackSem.front();
+            t = TP_._.T.type;
+            StackSem.pop_front();
+
+            IDD_ = StackSem.front();
+            p = IDD_._.ID.obj;
+            StackSem.pop_front();
+
+            p->eKind = PARAM_;
+            p->_.Param.pType = t;
+
+            LP_._.LP.list = p;
+            LP_.nont = LP;
+
+            StackSem.push_front(LP_);
 
             break;
 
@@ -381,66 +448,107 @@ void semantics(int rule){
 
             break;
 
-        case IDD_TP_RULE:                             // LP -> IDD COLON TP
+        case MF_RULE:                                   // MF -> ''
 
             TP_ = StackSem.front();
-            t = TP_._.T.type;
+            StackSem.pop_front();
+
+            LP_ = StackSem.front();
             StackSem.pop_front();
 
             IDD_ = StackSem.front();
-            p = IDD_._.ID.obj;
+            f = IDD_._.ID.obj;
             StackSem.pop_front();
 
-            p->eKind = PARAM_;
-            p->_.Param.pType = t;
-
-            LP_._.LP.list = p;
-            LP_.nont = LP;
-
-            StackSem.push_front(LP_);
+            f->eKind = FUNCTION_;
+            f->_.Function.pRetType = TP_._.T.type;
+            f->_.Function.pParams = LP_._.LP.list;
 
             break;
 
-        case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
-        //TODO
+        case FUNCTION_IDD_NB_LP_TP_B_RULE:            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
+
+            EndBlock();
+
+            break;
+
         case B_RULE:                                  // S -> NB B
 
             EndBlock();
 
             break;
 
-        case LDV_DV_RULE:                             // LDV -> LDV DV
-        //TODO
+///////////////////////////////////////////////////////////////////////
+            //TODO
+        // case IF_E_S_RULE:                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
 
+        //     S_ = StackSem.frnt();
+        //     StackSem.pop_frnt();
 
-            break;
+        //     E_ = StackSem.frnt();
+        //     t = E_._.E.type;
+        //     StackSem.pop_frnt();
+            
+        //     if( !CheckTypes(t,pBool)){
+        //         Error(ERR_BOOL_TYPE_EXPECTED);
+        //     }
 
-        case DV_RULE:                                 // LDV -> DV
-        //TODO
+        //     break;
 
+        // case IF_E_S_ELSE_S_RULE:                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
 
-            break;
+        //     S1_ = StackSem.frnt();
+        //     StackSem.pop_frnt();
 
-        case LS_S_RULE:                               // LS -> LS S
-        //TODO
+        //     S0_ = StackSem.frnt();
+        //     StackSem.pop_frnt();
 
+        //     E_ = StackSem.frnt();
+        //     t = E_._.E.type;
+        //     StackSem.pop_frnt();
+            
+        //     if( !CheckTypes(t,pBool)){
+        //         Error(ERR_BOOL_TYPE_EXPECTED);
+        //     }
 
-            break;
+        //     break;
 
-        case S_RULE:                                  // LS -> S
-        //TODO
+        // case WHILE_E_S_RULE:                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
 
+        //     S_ = StackSem.frnt();
+        //     StackSem.pop_frnt();
 
-            break;
+        //     E_ = StackSem.frnt();
+        //     t = E_._.E.type;
+        //     StackSem.pop_frnt();
+            
+        //     if( !CheckTypes(t,pBool)){
+        //         Error(ERR_BOOL_TYPE_EXPECTED);
+        //     }
+
+        //     break;
+
+        // case DO_S_WHILE_E_RULE:                       // S -> DO S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
+
+        //     E_ = StackSem.frnt();
+        //     t = E_._.E.type;
+        //     StackSem.pop_frnt();
+
+        //     S_ = StackSem.frnt();
+        //     StackSem.pop_frnt();
+            
+        //     if( !CheckTypes(t,pBool)){
+        //         Error(ERR_BOOL_TYPE_EXPECTED);
+        //     }
+
+        //     break;
+
+//////     //////     //////     //////     //////     //////     //////     //////
 
         case IF_E_S_RULE:                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
 
-            S_ = StackSem.front();
-            StackSem.pop_front();
-
             E_ = StackSem.front();
             t = E_._.E.type;
-            StackSem.pop_front();
             
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
@@ -450,15 +558,8 @@ void semantics(int rule){
 
         case IF_E_S_ELSE_S_RULE:                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
 
-            S1_ = StackSem.front();
-            StackSem.pop_front();
-
-            S0_ = StackSem.front();
-            StackSem.pop_front();
-
             E_ = StackSem.front();
             t = E_._.E.type;
-            StackSem.pop_front();
             
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
@@ -468,12 +569,8 @@ void semantics(int rule){
 
         case WHILE_E_S_RULE:                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
 
-            S_ = StackSem.front();
-            StackSem.pop_front();
-
             E_ = StackSem.front();
             t = E_._.E.type;
-            StackSem.pop_front();
             
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
@@ -485,10 +582,6 @@ void semantics(int rule){
 
             E_ = StackSem.front();
             t = E_._.E.type;
-            StackSem.pop_front();
-
-            S_ = StackSem.front();
-            StackSem.pop_front();
             
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
@@ -496,37 +589,7 @@ void semantics(int rule){
 
             break;
 
-        case LV_EQUALS_E_RULE:                        // S -> LV EQUALS E SEMI_COLON
-
-            E_ = StackSem.front();
-            t1 = E_._.E.type;
-            StackSem.pop_front();
-
-            LV_ = StackSem.front();
-            t2 = LV_._.LV.type;
-            StackSem.pop_front();
-
-            if(!CheckTypes(t1,t2)){
-                Error(ERR_TYPE_MISMATCH);
-            }
-
-            F_._.F.type = t2;
-            F_.nont = F;
-            StackSem.push_front(F_);
-
-            break;
-
-        case BREAK_RULE:                              // S -> BREAK SEMI_COLON
-        //TODO
-
-
-            break;
-
-        case CONTINUE_RULE:                           // S -> CONTINUE SEMI_COLON
-        //TODO
-
-
-            break;
+///////////////////////////////////////////////////////////////////////
 
         case E_AND_L_RULE:                            // E -> E AND L
 
@@ -644,7 +707,6 @@ void semantics(int rule){
             L0_.nont = L;
             StackSem.push_front(L0_);
 
-
             break;
 
         case L_EQUAL_EQUAL_R_RULE:                    // L -> L EQUAL_EQUAL R
@@ -660,7 +722,6 @@ void semantics(int rule){
             L0_._.L.type = pBool;
             L0_.nont = L;
             StackSem.push_front(L0_);
-
 
             break;
 
@@ -678,7 +739,6 @@ void semantics(int rule){
             L0_.nont = L;
             StackSem.push_front(L0_);
 
-
             break;
 
         case R_RULE:                                  // L -> R
@@ -690,7 +750,6 @@ void semantics(int rule){
             L_.nont = L;
             StackSem.push_front(L_);
 
-
             break;
 
         case R_PLUS_TM_RULE:                          // R -> R PLUS TM
@@ -698,15 +757,19 @@ void semantics(int rule){
             TM_ = StackSem.front();
             StackSem.pop_front();
 
-            R_ = StackSem.front();
+            R1_ = StackSem.front();
             StackSem.pop_front();
 
-            if (!CheckTypes(TM_._.TM.type, R_._.R.type)){
+            if (!CheckTypes(TM_._.TM.type, R1_._.R.type)){
                 Error(ERR_TYPE_MISMATCH);
             }
-            if (!CheckTypes(R_._.R.type, pInt) && !CheckTypes(R_._.R.type, pString)){
+            if (!CheckTypes(R1_._.R.type, pInt) && !CheckTypes(R1_._.R.type, pString)){
                 Error(ERR_INVALID_TYPE);
             }
+            
+            R0_._.R.type = R1_._.R.type;
+            R0_.nont = R;
+            StackSem.push_front(R0_);
 
             break;
 
@@ -715,16 +778,19 @@ void semantics(int rule){
             TM_ = StackSem.front();
             StackSem.pop_front();
 
-            R_ = StackSem.front();
+            R1_ = StackSem.front();
             StackSem.pop_front();
 
-            if (!CheckTypes(TM_._.TM.type, R_._.R.type)){
+            if (!CheckTypes(TM_._.TM.type, R1_._.R.type)){
                 Error(ERR_TYPE_MISMATCH);
             }
-            if (!CheckTypes(R_._.R.type, pInt) && !CheckTypes(R_._.R.type, pString)){
+            if (!CheckTypes(R1_._.R.type, pInt)){
                 Error(ERR_INVALID_TYPE);
             }
 
+            R0_._.R.type = R1_._.R.type;
+            R0_.nont = R;
+            StackSem.push_front(R0_);
 
             break;
 
@@ -737,7 +803,6 @@ void semantics(int rule){
             R_.nont = R;
             StackSem.push_front(R_);
 
-
             break;
 
         case TM_TIMES_F_RULE:                         // TM -> TM TIMES F
@@ -745,16 +810,19 @@ void semantics(int rule){
             F_ = StackSem.front();
             StackSem.pop_front();
 
-            TM_ = StackSem.front();
+            TM1_ = StackSem.front();
             StackSem.pop_front();
 
-            if (!CheckTypes(TM_._.TM.type, F_._.F.type)){
+            if (!CheckTypes(TM1_._.TM.type, F_._.F.type)){
                 Error(ERR_TYPE_MISMATCH);
             }
-            if (!CheckTypes(TM_._.TM.type, pInt) && !CheckTypes(TM_._.R.type, pString)){
+            if (!CheckTypes(TM1_._.TM.type, pInt) && !CheckTypes(TM1_._.R.type, pString)){
                 Error(ERR_INVALID_TYPE);
             }
 
+            TM0_._.TM.type = TM1_._.TM.type;
+            TM0_.nont = TM;
+            StackSem.push_front(TM0_);
 
             break;
 
@@ -773,6 +841,9 @@ void semantics(int rule){
                 Error(ERR_INVALID_TYPE);
             }
 
+            TM0_._.TM.type = TM1_._.TM.type;
+            TM0_.nont = TM;
+            StackSem.push_front(TM0_);
 
             break;
 
@@ -785,7 +856,6 @@ void semantics(int rule){
             TM_.nont = TM;
             StackSem.push_front(TM_);
 
-
             break;
 
         case LV_RULE:                                 // F -> LV
@@ -794,8 +864,8 @@ void semantics(int rule){
             F_._.F.type = LV_._.LV.type;
             StackSem.pop_front();
             
-            LV_.nont = LV;
-            StackSem.push_front(LV_);
+            F_.nont = F;
+            StackSem.push_front(F_);
 
             break;
 
@@ -828,7 +898,6 @@ void semantics(int rule){
             F_._.F.type = pInt;
             F_.nont = F;
             StackSem.push_front(F_);
-
 
             break;
 
@@ -866,37 +935,6 @@ void semantics(int rule){
 
             break;
 
-        case F_E_RULE:                                // F -> LEFT_PARENTHESIS E RIGHT_PARENTHESIS
-
-            E_ = StackSem.front();
-            StackSem.pop_front();
-            
-            F_._.F.type = E_._.E.type;
-            F_.nont = F;
-            StackSem.push_front(F_);
-
-            break;
-
-        case IDU_LE_RULE:                             // F -> IDU MC LEFT_PARENTHESIS LE RIGHT_PARENTHESIS
-
-            LE_ = StackSem.front();
-            StackSem.pop_front();
-            MC_ = StackSem.front();
-            StackSem.pop_front();
-            IDU_ = StackSem.front();
-            StackSem.pop_front();
-
-            F_._.F.type = MC_._.MC.type;
-            if( !MC_._.MC.err ) {
-                if( LE_._.LE.param != NULL ) {
-                    Error(ERR_TOO_FEW_ARGS);
-                }
-            }
-            F_.nont = F;
-            StackSem.push_front(F_);
-            
-            break;
-
         case MINUS_F_RULE:                            // F -> MINUS F
 
             F1_ = StackSem.front();
@@ -910,7 +948,6 @@ void semantics(int rule){
             F0_._.F.type = pInt;
             F0_.nont = F;
             StackSem.push_front(F0_);
-
 
             break;
 
@@ -927,7 +964,6 @@ void semantics(int rule){
             F0_._.F.type = pInt;
             F0_.nont = F;
             StackSem.push_front(F0_);
-
 
             break;
 
@@ -986,34 +1022,87 @@ void semantics(int rule){
 
             break;
 
-        case LE_COMMA_E_RULE:                         // LE -> LE COMMA E
+        case LV_DOT_ID_RULE:                          // LV -> LV DOT ID
+
+            ID_ = StackSem.front();
+            StackSem.pop_front();
+
+            LV1_ = StackSem.front();
+            t = LV1_._.LV.type;
+            StackSem.pop_front();
+
+            if (t->eKind != STRUCT_TYPE_){
+                if(t->eKind != UNIVERSAL_){
+                    Error(ERR_KIND_NOT_STRUCT);
+                }
+                LV0_._.LV.type = pUniversal;
+            } else {
+                p = t->_.Struct.pFields;
+                while (p != NULL){
+                    if(p->nName == ID_._.ID.name) break;
+                    p = p->pNext;
+                }
+                if (p == NULL){
+                    Error(ERR_FIELD_NOT_DECL);
+                    LV0_._.LV.type = pUniversal;
+                } else {
+                    LV0_._.LV.type = p->_.Field.pType;
+                }
+            }
+            LV0_.nont = LV;
+            StackSem.push_front(LV0_);
+            
+            break;
+
+        case LV_E_RULE:                               // LV -> LV LEFT_SQUARE E RIGHT_SQUARE
 
             E_ = StackSem.front();
             StackSem.pop_front();
-            LE1_ = StackSem.front();
-            StackSem.pop_front();
-            LE0_._.LE.param = NULL;
-            LE0_._.LE.err = L1_._.LE.err;
 
-            n = LE1_._.LE.n;
-            if(!LE1_._.LE.err){
-                p = LE1_._.LE.param;
-                if(p == NULL){
-                    Error(ERR_TOO_MANY_ARGS);
-                    LE0_._.LE.err = true;
+            LV1_ = StackSem.front();
+            t = LV1_._.LV.type;
+            StackSem.pop_front();
+            
+            if(t == pString){
+                LV0_._.LV.type = pChar;
+            
+            } else if(t->eKind != ARRAY_TYPE_){
+                if(t->eKind != UNIVERSAL_){
+                    Error(ERR_KIND_NOT_ARRAY);
                 }
-                else{
-                    if(!CheckTypes(p->_.Param.pType,E_._.E.type)){
-                        Error(ERR_PARAM_TYPE);
-                    }
-                    LE0_._.LE.param = p->pNext;
-                    LE0_._.LE.n = n + 1;
-                }
+                LV0_._.LV.type = pUniversal;
+            } else {
+                LV0_._.LV.type = t->_.Array.pElemType;
             }
-            LE0_.nont = LE;
-            StackSem.push_front(LE0_);
+            if(!CheckTypes(E_._.E.type, pInt)){
+                Error( ERR_INVALID_INDEX_TYPE );
+            }
+
+            LV0_.nont = LV;
+            StackSem.push_front(LV0_);
+            
+            break;
+
+        case LV_IDU_RULE:                             // LV -> IDU
+
+            IDU_ = StackSem.front();
+            p = IDU_._.ID.obj;
+            StackSem.pop_front();
+
+            if(p->eKind != VAR_ && p->eKind != PARAM_){
+                if(p->eKind != UNIVERSAL_) Error(ERR_KIND_NOT_VAR);
+                LV_._.LV.type = pUniversal;
+            } else {
+                LV_._.LV.type = p->_.Var.pType;
+            }
+            
+            LV_.nont = LV;
+            StackSem.push_front(LV_);
 
             break;
+
+
+
 
         case LE_E_RULE:                               // LE -> E
 
@@ -1043,143 +1132,52 @@ void semantics(int rule){
 
             break;
 
-        case LV_DOT_ID_RULE:                          // LV -> LV DOT ID
+        case IDU_LE_RULE:                             // F -> IDU MC LEFT_PARENTHESIS LE RIGHT_PARENTHESIS
 
-            ID_ = StackSem.front();
+            LE_ = StackSem.front();
+            StackSem.pop_front();
+            MC_ = StackSem.front();
+            StackSem.pop_front();
+            IDU_ = StackSem.front();
             StackSem.pop_front();
 
-            LV1_ = StackSem.front();
-            StackSem.pop_front();
-
-            if (t->eKind != STRUCT_TYPE_){
-                if(t->eKind != UNIVERSAL_){
-                    Error(ERR_KIND_NOT_STRUCT);
-                }
-                LV0_._.LV.type = pUniversal;
-            } else {
-                p = t->_.Struct.pFields;
-                while (p != NULL){
-                    if(p->nName == ID_._.ID.name) break;
-                    p = p->pNext;
-                }
-                if (p == NULL){
-                    Error(ERR_FIELD_NOT_DECL);
-                    LV0_._.LV.type = pUniversal;
-                } else {
-                    LV0_._.LV.type = p->_.Field.pType;
+            F_._.F.type = MC_._.MC.type;
+            if( !MC_._.MC.err ) {
+                if( LE_._.LE.param != NULL ) {
+                    Error(ERR_TOO_FEW_ARGS);
                 }
             }
-
+            F_.nont = F;
+            StackSem.push_front(F_);
+            
             break;
 
-        case LV_E_RULE:                               // LV -> LV LEFT_SQUARE E RIGHT_SQUARE
+            case LE_COMMA_E_RULE:                         // LE -> LE COMMA E
 
             E_ = StackSem.front();
             StackSem.pop_front();
-
-            LV1_ = StackSem.front();
-            t = LV1_._.LV.type;
+            LE1_ = StackSem.front();
             StackSem.pop_front();
-            
-            if(t == pString){
-                LV0_._.LV.type = pChar;
-            } else if(t->eKind != ARRAY_TYPE_){
-                if(t->eKind != UNIVERSAL_){
-                    Error(ERR_KIND_NOT_ARRAY);
+            LE0_._.LE.param = NULL;
+            LE0_._.LE.err = L1_._.LE.err;
+
+            n = LE1_._.LE.n;
+            if(!LE1_._.LE.err){
+                p = LE1_._.LE.param;
+                if(p == NULL){
+                    Error(ERR_TOO_MANY_ARGS);
+                    LE0_._.LE.err = true;
                 }
-                LV0_._.LV.type = pUniversal;
-            } else {
-                LV0_._.LV.type = t->_.Array.pElemType;
+                else{
+                    if(!CheckTypes(p->_.Param.pType,E_._.E.type)){
+                        Error(ERR_PARAM_TYPE);
+                    }
+                    LE0_._.LE.param = p->pNext;
+                    LE0_._.LE.n = n + 1;
+                }
             }
-            if(!CheckTypes(E_._.E.type, pInt)){
-                Error( ERR_INVALID_INDEX_TYPE );
-            }
-
-            break;
-
-        case LV_IDU_RULE:                             // LV -> IDU
-
-            IDU_ = StackSem.front();
-            p = IDU_._.ID.obj;
-            StackSem.pop_front();
-
-            if(p->eKind != VAR_ && p->eKind != PARAM_){
-                if(p->eKind != UNIVERSAL_) Error(ERR_KIND_NOT_VAR);
-                LV_._.LV.type = pUniversal;
-            } else {
-                LV_._.LV.type = p->_.Var.pType;
-            }
-
-            break;
-
-        case TRUE_RULE:                               // NT_TRUE -> TRUE
-
-            TRUE_.nont = NT_TRUE;
-            TRUE_._.BOOL.val = true;
-            TRUE_._.BOOL.type = pBool;
-            StackSem.push_front(TRUE_);
-
-            break;
-
-        case FALSE_RULE:                              // NT_FALSE -> FALSE
-            
-            FALSE_.nont = NT_FALSE;
-            FALSE_._.BOOL.val = false;
-            FALSE_._.BOOL.type = pBool;
-            StackSem.push_front(FALSE_);
-
-            break;
-
-        case CHARACTER_RULE:                          // NT_CHR -> CHARACTER
-
-            CHR_.nont = NT_CHR;
-            CHR_._.CONST.pos = tokenSecundario;
-            CHR_._.CONST.type = pChar;
-            CHR_._.CONST.val.c = getCharConst(tokenSecundario);
-            StackSem.push_front(CHR_);
-
-            break;
-
-        case STRINGVAL_RULE:                          // NT_STR -> STRINGVAL
-
-            STR_.nont = NT_STR;
-            STR_._.CONST.pos = tokenSecundario;
-            STR_._.CONST.type = pChar;
-            STR_._.CONST.val.s = new string(getStringConst(tokenSecundario));
-            StackSem.push_front(CHR_);
-            break;
-
-        case NUMERAL_RULE:                            // NT_NUM -> NUMERAL
-            
-            NUM_.nont = NT_CHR;
-            NUM_._.CONST.pos = tokenSecundario;
-            NUM_._.CONST.type = pInt;
-            NUM_._.CONST.val.n = getIntConst(tokenSecundario);
-            StackSem.push_front(NUM_);
-
-            break;
-
-        case NB_RULE:                                   // NB -> ''
-
-            NewBlock();
-
-            break;
-
-        case MF_RULE:                                   // MF -> ''
-
-            TP_ = StackSem.front();
-            StackSem.pop_front();
-
-            LP_ = StackSem.front();
-            StackSem.pop_front();
-
-            IDD_ = StackSem.front();
-            f = IDD_._.ID.obj;
-            StackSem.pop_front();
-
-            f->eKind = FUNCTION_;
-            f->_.Function.pRetType = TP_._.T.type;
-            f->_.Function.pParams = LP_._.LP.list;
+            LE0_.nont = LE;
+            StackSem.push_front(LE0_);
 
             break;
 
@@ -1187,7 +1185,7 @@ void semantics(int rule){
 
             IDU_ = StackSem.front();
             f = IDU_._.ID.obj;
-            StackSem.pop_front();
+            StackSem.pop_front(); //COMMENT
 
             if(f->eKind != FUNCTION_){
                 Error(ERR_KIND_NOT_FUNCTION);
@@ -1199,7 +1197,29 @@ void semantics(int rule){
                 MC_._.MC.param = f->_.Function.pParams;
                 MC_._.MC.err = false;
             }
+
+            MC_.nont = MC;
             StackSem.push_front(MC_);
+
+            break;
+
+        case LV_EQUALS_E_RULE:                        // S -> LV EQUALS E SEMI_COLON
+
+            E_ = StackSem.front();
+            t1 = E_._.E.type;
+            StackSem.pop_front();
+
+            LV_ = StackSem.front();
+            t2 = LV_._.LV.type;
+            StackSem.pop_front();
+
+            if(!CheckTypes(t1,t2)){
+                Error(ERR_TYPE_MISMATCH);
+            }
+
+            F_._.F.type = t2;
+            F_.nont = F;
+            StackSem.push_front(F_); //COMMENT
 
             break;
 
