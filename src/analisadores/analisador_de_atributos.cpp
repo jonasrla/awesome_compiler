@@ -1186,7 +1186,6 @@ void semantics(int rule){
 
             IDU_ = StackSem.front();
             f = IDU_._.ID.obj;
-            // StackSem.pop_front(); //TODO
 
             if(f->eKind != FUNCTION_){
                 Error(ERR_KIND_NOT_FUNCTION);
@@ -1220,7 +1219,6 @@ void semantics(int rule){
 
             F_._.F.type = t2;
             F_.nont = F;
-            StackSem.push_front(F_); //COMMENT
 
             break;
 
