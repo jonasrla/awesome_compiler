@@ -299,7 +299,7 @@ void semantics(int rule){
 
         case NUMERAL_RULE:                            // NT_NUM -> NUMERAL
             
-            NUM_.nont = NT_CHR;
+            NUM_.nont = NT_NUM;
             NUM_._.CONST.pos = tokenSecundario;
             NUM_._.CONST.type = pInt;
             NUM_._.CONST.val.n = getIntConst(tokenSecundario);
