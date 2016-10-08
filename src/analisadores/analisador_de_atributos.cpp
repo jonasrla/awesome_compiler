@@ -421,6 +421,7 @@ void semantics(int rule){
 
             LP_._.LP.list = p;
             LP_._.LP.list->pNext = NULL;
+            LP_._.LP.nSize = 1;
             LP_.nont = LP;
 
             StackSem.push_front(LP_);
@@ -445,6 +446,7 @@ void semantics(int rule){
 
             LP0_._.LP.list = p;
             LP0_._.LP.list->pNext = LP1_._.LP.list;
+            LP0_._.LP.nSize = LP1_._.LP.nSize + 1;
             LP0_.nont = LP;
 
             StackSem.push_front(LP_);
@@ -466,6 +468,7 @@ void semantics(int rule){
             f->eKind = FUNCTION_;
             f->_.Function.pRetType = TP_._.T.type;
             f->_.Function.pParams = LP_._.LP.list;
+            f->_.Function.nParams = LP_._.LP.nSize;
 
             break;
 
@@ -1146,8 +1149,11 @@ void semantics(int rule){
 
             F_._.F.type = MC_._.MC.type;
             if( !MC_._.MC.err ) {
-                if( LE_._.LE.param != NULL ) {
+                if( LE_._.LE.n-1 < f->_.Function.nParams && LE_._.LE.n != 0) {
                     Error(ERR_TOO_FEW_ARGS);
+                }
+               else if(LE_._.LE.n-1 > f->_.Function.nParams){
+                    Error(ERR_TOO_MANY_ARGS);
                 }
             }
             F_.nont = F;

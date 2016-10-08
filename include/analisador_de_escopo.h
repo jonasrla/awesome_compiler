@@ -19,6 +19,7 @@ typedef struct object
         struct {
             struct object *pRetType;
             struct object *pParams;
+            int nParams;
         } Function;
         struct {
             struct object *pElemType;

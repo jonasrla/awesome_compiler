@@ -32,7 +32,11 @@ typedef struct {
         } T,E,L,R,TM,F,LV;
         struct{
             pobject list;
-        } LI,DC,LP;
+        } LI,DC;
+        struct{
+            pobject list;
+            int nSize;
+        } LP;
         struct{
             bool val;
             pobject type;
