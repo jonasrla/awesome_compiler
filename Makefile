@@ -1,5 +1,5 @@
-CXX = g++
-CFLAGS = -Wall -Iinclude -std=c++11
+CXX = g++ 
+CFLAGS = -Wall -Iinclude  -std=c++11 
 LFLAGS = -WALL
 
 DEBUG = 0
