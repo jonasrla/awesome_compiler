@@ -420,6 +420,7 @@ void semantics(int rule){
             p->_.Param.pType = t;
 
             LP_._.LP.list = p;
+            LP_._.LP.list->pNext = NULL;
             LP_.nont = LP;
 
             StackSem.push_front(LP_);
@@ -442,7 +443,8 @@ void semantics(int rule){
             p->eKind = PARAM_;
             p->_.Param.pType = t;
 
-            LP0_._.LP.list = LP1_._.LP.list;
+            LP0_._.LP.list = p;
+            LP0_._.LP.list->pNext = LP1_._.LP.list;
             LP0_.nont = LP;
 
             StackSem.push_front(LP_);
