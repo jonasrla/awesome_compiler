@@ -375,13 +375,19 @@ void semantics(int rule){
             p = LI_._.LI.list;
             StackSem.pop_front();
 
+            n = 0;
+
             while (p != NULL && p->eKind == NO_KIND_DEF_){
                 p->eKind = FIELD_;
                 p->_.Field.pType = t;
+                p->_.Field.nIndex = n;
+                p->_.Field.nSize = TP_.nSize;
+                n = n + TP_.nSize;
                 p = p->pNext;
             }
             
             DC_._.DC.list = LI_._.LI.list;
+            DC_.nSize = n;
             DC_.nont = DC;
             StackSem.push_front(DC_);
             
@@ -400,15 +406,20 @@ void semantics(int rule){
             DC1_ = StackSem.front();
             StackSem.pop_front();
 
+            n = DC1_.nSize;
+
             while (p != NULL && p->eKind == NO_KIND_DEF_){
                 p->eKind = FIELD_;
                 p->_.Field.pType = t;
+                p->_.Field.nIndex = n;
+                p->_.Field.nSize = TP_.nSize;
+                n = n + TP_.nSize;
                 p = p->pNext;
             }
 
             DC0_.nont = DC;
             DC0_._.DC.list = DC1_._.DC.list;
-            
+            DC_.nSize = n;
             StackSem.push_front(DC0_);
 
             break;
