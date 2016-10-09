@@ -329,6 +329,7 @@ void semantics(int rule){
             p->eKind = ARRAY_TYPE_;
             p->_.Array.nNumElems = n;
             p->_.Array.pElemType = t;
+            p->_.Array.nSize = n * TP_.nSize;
 
             break;
 
@@ -344,6 +345,7 @@ void semantics(int rule){
 
             p->eKind =ALIAS_TYPE_;
             p->_.Alias.pBaseType = t;
+            p->_.Array.nSize = TP_.nSize;
 
             break;
 
