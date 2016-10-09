@@ -495,7 +495,7 @@ void semantics(int rule){
 
             break;
 
-        case FUNCTION_IDD_NB_LP_TP_B_RULE:            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
+        case FUNCTION_IDD_NF_LP_TP_B_RULE:            // DF -> FUNCTION IDD NF LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
 
             EndBlock();
 
@@ -1183,6 +1183,10 @@ void semantics(int rule){
             F_.nont = F;
 
             break;
+
+        case NF_RULE:                                  // NF -> ''
+
+            NewBlock();
 
         case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
         //std::cout << "B -> LEFT_BRACES LDV LS RIGHT_BRACES " << currentLine << std::endl;

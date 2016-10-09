@@ -25,7 +25,7 @@
 #endif
 
 typedef enum{
-    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC
+    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC,NF
 } t_nterm;
 
 void parse();
@@ -43,7 +43,7 @@ void parse();
 #define DC_LI_TP_RULE 13                           // DC -> DC SEMI_COLON LI COLON TP
 #define LI_TP_RULE 14                              // DC -> LI COLON TP
 
-#define FUNCTION_IDD_NB_LP_TP_B_RULE 15            // DF -> FUNCTION IDD NB LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
+#define FUNCTION_IDD_NF_LP_TP_B_RULE 15            // DF -> FUNCTION IDD NF LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
 
 #define LP_IDD_TP_RULE 16                          // LP -> LP COMMA IDD COLON TP
 #define IDD_TP_RULE 17                             // LP -> IDD COLON TP
@@ -125,3 +125,4 @@ void parse();
 #define NB_RULE 77									// NB -> ''
 #define MF_RULE 78									// MF -> ''
 #define MC_RULE 79									// MC -> ''
+#define NF_RULE 80									// NF -> ''
