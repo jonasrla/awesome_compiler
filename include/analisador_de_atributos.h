@@ -22,6 +22,7 @@ void Error(errorcode code);
 
 typedef struct {
     t_nterm nont;
+    int nSize;
     union {
         struct {
             pobject obj;

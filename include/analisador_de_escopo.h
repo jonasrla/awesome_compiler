@@ -15,20 +15,27 @@ typedef struct object
     union {
         struct {
             struct object *pType;
+            int nIndex;
+            int nSize;
         } Var, Param, Field;
         struct {
             struct object *pRetType;
             struct object *pParams;
+            int nIndex;
             int nParams;
+            int nVars;
         } Function;
         struct {
+            int nSize;
             struct object *pElemType;
             int nNumElems;
         } Array;
         struct {
+            int nSize;
             struct object *pFields;
         } Struct;
         struct {
+            int nSize;
             struct object *pBaseType;
         } Alias,Type;
     }_;
