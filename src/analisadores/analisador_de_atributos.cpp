@@ -177,6 +177,7 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pInt;
+            TP_.nSize = 1;
             StackSem.push_front(TP_);
 
             break;
@@ -185,6 +186,7 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pChar;
+            TP_.nSize = 1;
             StackSem.push_front(TP_);
 
             break;
@@ -193,6 +195,7 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pBool;
+            TP_.nSize = 1;
             StackSem.push_front(TP_);
 
             break;
@@ -201,6 +204,7 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pString;
+            TP_.nSize = 1;
             StackSem.push_front(TP_);
 
             break;
@@ -212,8 +216,10 @@ void semantics(int rule){
             p = IDU_._.ID.obj;
             if (IS_TYPE_KIND(p->eKind) || p->eKind == UNIVERSAL_) {
                 TP_._.T.type = p;
+                TP_.nSize = p->_.Alias.nSize;
             } else {
                 TP_._.T.type = pUniversal;
+                TP_.nSize = 0;
                 Error( ERR_TYPE_EXPECTED );
             }
             TP_.nont = TP;
