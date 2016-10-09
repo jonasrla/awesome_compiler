@@ -437,12 +437,13 @@ void semantics(int rule){
 
             p->eKind = PARAM_;
             p->_.Param.pType = t;
+            p->_.Param.nIndex = 0;
+            p->_.Param.nSize = TP_.nSize;
 
             LP_._.LP.list = p;
-            LP_._.LP.list->pNext = NULL;
-            LP_._.LP.nSize = 1;
+            LP_.nSize = TP_.nSize;
             LP_.nont = LP;
-
+            
             StackSem.push_front(LP_);
 
             break;
@@ -458,17 +459,20 @@ void semantics(int rule){
             StackSem.pop_front();
 
             LP1_ = StackSem.front();
+            n = LP1_.nSize;
             StackSem.pop_front();
-
+            
+            
             p->eKind = PARAM_;
             p->_.Param.pType = t;
-
-            LP0_._.LP.list = p;
-            LP0_._.LP.list->pNext = LP1_._.LP.list;
-            LP0_._.LP.nSize = LP1_._.LP.nSize + 1;
+            p->_.Param.nIndex = n;
+            p->_.Param.nSize = TP_.nSize;
+            
+            LP0_._.LP.list = LP1_._.LP.list;
+            LP0_.nSize = n + TP_.nSize;
             LP0_.nont = LP;
-
-            StackSem.push_front(LP_);
+            
+            StackSem.push_front(LP0_);
 
             break;
 
