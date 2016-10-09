@@ -1184,6 +1184,39 @@ void semantics(int rule){
 
             break;
 
+        case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
+        //std::cout << "B -> LEFT_BRACES LDV LS RIGHT_BRACES " << currentLine << std::endl;
+        
+
+
+            break;
+
+        case LDV_DV_RULE:                             // LDV -> LDV DV
+        //std::cout << "LDV -> LDV DV " << currentLine << std::endl;
+        
+
+
+            break;
+
+        case DV_RULE:                                 // LDV -> DV
+        //std::cout << "LDV -> DV " << currentLine << std::endl;
+        
+
+
+            break;
+
+        case LS_S_RULE:                               // LS -> LS S
+        //std::cout << "LS -> LS S " << currentLine << std::endl;
+        
+
+
+            break;
+
+        case S_RULE:                                  // LS -> S
+        //std::cout << "LS -> S " << currentLine << std::endl;
+        
+
+
         default:
             break;
     }
