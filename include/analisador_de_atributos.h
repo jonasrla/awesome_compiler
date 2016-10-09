@@ -3,9 +3,11 @@
 #include "analisador_lexico.h"
 #include "analisador_sintatico.h"
 #include "analisador_de_escopo.h"
+#include <fstream>
 
 extern bool hasError;
 
+extern std::fstream fs;
 
 #define MAX_NEST_LEVEL 50
 #define IS_TYPE_KIND(k) ((k)==ARRAY_TYPE_ || \
@@ -62,5 +64,8 @@ typedef struct {
             bool err;
             int n;
         } LE;
+        struct{
+            long offset;
+        }MF;
     }_;
 } t_attrib;

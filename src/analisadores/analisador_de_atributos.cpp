@@ -114,8 +114,8 @@ bool CheckTypes(pobject t1,pobject t2){
 
 
 void semantics(int rule){
-    static int name, n;
     static pobject p, t, f, t1, t2;
+    static int name, n, nFuncs;
     static t_attrib IDD_, IDU_, ID_, TP_, LI_, LI0_, LI1_,\
                     TRUE_, FALSE_, CHR_, STR_, NUM_, DC_, \
                     DC0_, DC1_, LP_, LP0_, LP1_, E_, L_,  \
@@ -492,6 +492,9 @@ void semantics(int rule){
             f->_.Function.pRetType = TP_._.T.type;
             f->_.Function.pParams = LP_._.LP.list;
             f->_.Function.nParams = LP_.nSize;
+            f->_.Function.nVars = LP_.nSize;
+
+            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams;
 
             break;
 
@@ -1185,6 +1188,14 @@ void semantics(int rule){
             break;
 
         case NF_RULE:                                  // NF -> ''
+
+            IDD_ = StackSem.front();
+            f = IDD_._.ID.obj;
+
+            f->eKind = FUNCTION_;
+            f->_.Function.pParams = NULL;
+            f->_.Function.nParams = 0;
+            f->_.Function.nIndex = nFuncs++;
 
             NewBlock();
 
