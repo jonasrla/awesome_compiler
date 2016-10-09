@@ -118,11 +118,10 @@ void semantics(int rule){
     static pobject p, t, f, t1, t2;
     static t_attrib IDD_, IDU_, ID_, TP_, LI_, LI0_, LI1_,\
                     TRUE_, FALSE_, CHR_, STR_, NUM_, DC_, \
-                    DC0_, DC1_, LP_, LP0_, LP1_, S_, E_,  \
-                    S0_, S1_, L_, E1_, E0_, L0_, L1_, R_, \
-                    TM_, F_, LV_, F0_, F1_, LV0_, LV1_,   \
-                    MC_, LE_, LE0_, LE1_, R0_, R1_, TM0_, \
-                    TM1_;
+                    DC0_, DC1_, LP_, LP0_, LP1_, E_, L_,  \
+                    E1_, E0_, L0_, L1_, R_, TM_, F_, LV_, \
+                    F0_, F1_, LV0_, LV1_, MC_, LE_, LE0_,  \
+                    LE1_, R0_, R1_, TM0_, TM1_;
 
     switch(rule){
 
@@ -484,73 +483,6 @@ void semantics(int rule){
 
             break;
 
-///////////////////////////////////////////////////////////////////////
-            //TODO
-        // case IF_E_S_RULE:                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
-
-        //     S_ = StackSem.frnt();
-        //     StackSem.pop_frnt();
-
-        //     E_ = StackSem.frnt();
-        //     t = E_._.E.type;
-        //     StackSem.pop_frnt();
-            
-        //     if( !CheckTypes(t,pBool)){
-        //         Error(ERR_BOOL_TYPE_EXPECTED);
-        //     }
-
-        //     break;
-
-        // case IF_E_S_ELSE_S_RULE:                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
-
-        //     S1_ = StackSem.frnt();
-        //     StackSem.pop_frnt();
-
-        //     S0_ = StackSem.frnt();
-        //     StackSem.pop_frnt();
-
-        //     E_ = StackSem.frnt();
-        //     t = E_._.E.type;
-        //     StackSem.pop_frnt();
-            
-        //     if( !CheckTypes(t,pBool)){
-        //         Error(ERR_BOOL_TYPE_EXPECTED);
-        //     }
-
-        //     break;
-
-        // case WHILE_E_S_RULE:                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
-
-        //     S_ = StackSem.frnt();
-        //     StackSem.pop_frnt();
-
-        //     E_ = StackSem.frnt();
-        //     t = E_._.E.type;
-        //     StackSem.pop_frnt();
-            
-        //     if( !CheckTypes(t,pBool)){
-        //         Error(ERR_BOOL_TYPE_EXPECTED);
-        //     }
-
-        //     break;
-
-        // case DO_S_WHILE_E_RULE:                       // S -> DO S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
-
-        //     E_ = StackSem.frnt();
-        //     t = E_._.E.type;
-        //     StackSem.pop_frnt();
-
-        //     S_ = StackSem.frnt();
-        //     StackSem.pop_frnt();
-            
-        //     if( !CheckTypes(t,pBool)){
-        //         Error(ERR_BOOL_TYPE_EXPECTED);
-        //     }
-
-        //     break;
-
-//////     //////     //////     //////     //////     //////     //////     //////
-
         case IF_E_S_RULE:                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
 
             E_ = StackSem.front();
@@ -594,8 +526,6 @@ void semantics(int rule){
             }
 
             break;
-
-///////////////////////////////////////////////////////////////////////
 
         case E_AND_L_RULE:                            // E -> E AND L
 
