@@ -491,7 +491,7 @@ void semantics(int rule){
             f->eKind = FUNCTION_;
             f->_.Function.pRetType = TP_._.T.type;
             f->_.Function.pParams = LP_._.LP.list;
-            f->_.Function.nParams = LP_._.LP.nSize;
+            f->_.Function.nParams = LP_.nSize;
 
             break;
 
