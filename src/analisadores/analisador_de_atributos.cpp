@@ -360,6 +360,7 @@ void semantics(int rule){
 
             p->eKind = STRUCT_TYPE_;
             p->_.Struct.pFields = DC_._.DC.list;
+            p->_.Struct.nSize = DC_.nSize;
 
             EndBlock();
 
