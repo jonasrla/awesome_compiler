@@ -25,7 +25,7 @@
 #endif
 
 typedef enum{
-    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC,NF
+    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC,NF,MT,ME,MW
 } t_nterm;
 
 void parse();
@@ -61,10 +61,10 @@ void parse();
 #define LI_IDD_RULE 24                             // LI -> LI COMMA IDD
 #define IDD_RULE 25                                // LI -> IDD
 
-#define IF_E_S_RULE 26                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
-#define IF_E_S_ELSE_S_RULE 27                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS S ELSE S
-#define WHILE_E_S_RULE 28                          // S -> WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS S
-#define DO_S_WHILE_E_RULE 29                       // S -> DO S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
+#define IF_E_S_RULE 26                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S
+#define IF_E_S_ELSE_S_RULE 27                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S ELSE ME S
+#define WHILE_E_S_RULE 28                          // S -> WHILE MW LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S
+#define DO_S_WHILE_E_RULE 29                       // S -> DO MW S WHILE LEFT_PARENTHESIS E RIGHT_PARENTHESIS SEMI_COLON
 #define B_RULE 30                                  // S -> NB B
 #define LV_EQUALS_E_RULE 31                        // S -> LV EQUALS E SEMI_COLON
 #define BREAK_RULE 32                              // S -> BREAK SEMI_COLON
@@ -126,3 +126,6 @@ void parse();
 #define MF_RULE 78									// MF -> ''
 #define MC_RULE 79									// MC -> ''
 #define NF_RULE 80									// NF -> ''
+#define MT_RULE 81
+#define ME_RULE 82
+#define MW_RULE 83
