@@ -5,7 +5,10 @@
 #include "analisador_lexico.h"
 #include "analisador_sintatico.h"
 #include "analisador_de_escopo.h"
+#include "analisador_de_atributos.h"
 #include <errno.h>
+
+std::fstream fs;
 
 void ERROR_FUNC(){
     printf("Invalid arguments\nUsage: awe_comp [SCRIPT_NAME] [-o OUTPUT_FILE_NAME]\n");
@@ -17,6 +20,7 @@ int main(int argc, char const *argv[])
     // BEGIN command line inputs
     std::string input_file_name = "programa";
     std::string output_file_name = "executavel";
+    fs = std::fstream();
     if (argc == 2) {
         if (!strcmp(argv[1],"-o")) {
             ERROR_FUNC();
@@ -70,6 +74,9 @@ int main(int argc, char const *argv[])
     //     }
     //     printf("\n");
     // } while(token != END);
+    
+    fs.open(output_file_name, std::fstream::out | std::fstream::trunc);
     parse();
+    fs.close();
     return 0;
 }
