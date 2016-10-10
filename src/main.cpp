@@ -47,33 +47,11 @@ int main(int argc, char const *argv[])
         ERROR_FUNC();
     }
     printf("input_file_name: %s\noutput_file_name: %s\n", input_file_name.c_str(), output_file_name.c_str());
-    // END command line inputs
 
     program = fopen(input_file_name.c_str(), "r");
     if (!program) {
         fprintf(stderr, "Failed to open %s: %s\n", input_file_name.c_str(), strerror(errno));
     }
-    // do{
-    //     token = nextToken();
-    //     printf("%d\n", token);
-    //     if (token == CHARACTER){
-    //         printf("CHAR\n");
-    //         printf("id=%d\n%c\n", tokenSecundario, getCharConst(tokenSecundario));
-    //     }
-    //     if (token == NUMERAL){
-    //         printf("INT\n");
-    //         printf("id=%d\n%d\n", tokenSecundario, getIntConst(tokenSecundario));
-    //     }
-    //     if (token == STRINGVAL){
-    //         printf("STRING\n");
-    //         printf("id=%d\n%s\n", tokenSecundario, getStringConst(tokenSecundario).c_str());
-    //     }
-    //     if (token == ID){
-    //         printf("ID\n");
-    //         printf("id=%d\n", tokenSecundario);
-    //     }
-    //     printf("\n");
-    // } while(token != END);
     
     fs.open(output_file_name, std::fstream::out | std::fstream::trunc);
     parse();
