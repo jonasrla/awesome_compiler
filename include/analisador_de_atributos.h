@@ -72,3 +72,5 @@ typedef struct {
         }MF;
     }_;
 } t_attrib;
+
+void print_nterm(t_nterm val);

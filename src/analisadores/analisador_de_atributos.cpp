@@ -1239,3 +1239,141 @@ void semantics(int rule){
             break;
     }
 }
+
+void print_nterm(t_nterm val){
+    switch (val){
+    
+    case P:
+
+        std::cout << "P" << std::endl;
+        break;
+    case LDE:
+
+        std::cout << "LDE" << std::endl;
+        break;
+    case DE:
+
+        std::cout << "DE" << std::endl;
+        break;
+    case DT:
+
+        std::cout << "DT" << std::endl;
+        break;
+    case TP:
+
+        std::cout << "TP" << std::endl;
+        break;
+    case DC:
+
+        std::cout << "DC" << std::endl;
+        break;
+    case DF:
+
+        std::cout << "DF" << std::endl;
+        break;
+    case LP:
+
+        std::cout << "LP" << std::endl;
+        break;
+    case B:
+
+        std::cout << "B" << std::endl;
+        break;
+    case LDV:
+
+        std::cout << "LDV" << std::endl;
+        break;
+    case LS:
+
+        std::cout << "LS" << std::endl;
+        break;
+    case DV:
+
+        std::cout << "DV" << std::endl;
+        break;
+    case LI:
+
+        std::cout << "LI" << std::endl;
+        break;
+    case S:
+
+        std::cout << "S" << std::endl;
+        break;
+    case E:
+
+        std::cout << "E" << std::endl;
+        break;
+    case L:
+
+        std::cout << "L" << std::endl;
+        break;
+    case R:
+
+        std::cout << "R" << std::endl;
+        break;
+    case TM:
+
+        std::cout << "TM" << std::endl;
+        break;
+    case F:
+
+        std::cout << "F" << std::endl;
+        break;
+    case LE:
+
+        std::cout << "LE" << std::endl;
+        break;
+    case LV:
+
+        std::cout << "LV" << std::endl;
+        break;
+    case IDD:
+
+        std::cout << "IDD" << std::endl;
+        break;
+    case IDU:
+
+        std::cout << "IDU" << std::endl;
+        break;
+    case ID:
+
+        std::cout << "ID" << std::endl;
+        break;
+    case NT_TRUE:
+
+        std::cout << "NT_TRUE" << std::endl;
+        break;
+    case NT_FALSE:
+
+        std::cout << "NT_FALSE" << std::endl;
+        break;
+    case NT_CHR:
+
+        std::cout << "NT_CHR" << std::endl;
+        break;
+    case NT_STR:
+
+        std::cout << "NT_STR" << std::endl;
+        break;
+    case NT_NUM:
+
+        std::cout << "NT_NUM" << std::endl;
+        break;
+    case NB:
+
+        std::cout << "NB" << std::endl;
+        break;
+    case MF:
+
+        std::cout << "MF" << std::endl;
+        break;
+    case MC:
+
+        std::cout << "MC" << std::endl;
+        break;
+    case NF:
+
+        std::cout << "NF" << std::endl;
+        break;
+    }
+}
