@@ -24,7 +24,6 @@ void Error(errorcode code);
 
 typedef struct {
     t_nterm nont;
-    int nSize;
     union {
         struct {
             pobject obj;
@@ -32,14 +31,18 @@ typedef struct {
         } ID;
         struct {
             pobject type;
-        } T,E,L,R,TM,F,LV;
+        } E,L,R,TM,F,LV;
+        struct {
+            pobject type;
+            int nSize;
+        } T;
         struct{
             pobject list;
-        } LI,DC;
+        } LI;
         struct{
             pobject list;
             int nSize;
-        } LP;
+        } LP,DC;
         struct{
             bool val;
             pobject type;

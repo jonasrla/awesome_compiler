@@ -177,8 +177,8 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pInt;
-            TP_.nSize = 1;
             StackSem.push_front(TP_);
+            TP_._.T.nSize = 1;
 
             break;
 
@@ -186,8 +186,8 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pChar;
-            TP_.nSize = 1;
             StackSem.push_front(TP_);
+            TP_._.T.nSize = 1;
 
             break;
 
@@ -195,8 +195,8 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pBool;
-            TP_.nSize = 1;
             StackSem.push_front(TP_);
+            TP_._.T.nSize = 1;
 
             break;
 
@@ -204,8 +204,8 @@ void semantics(int rule){
 
             TP_.nont = TP;
             TP_._.T.type = pString;
-            TP_.nSize = 1;
             StackSem.push_front(TP_);
+            TP_._.T.nSize = 1;
 
             break;
 
@@ -216,10 +216,10 @@ void semantics(int rule){
             p = IDU_._.ID.obj;
             if (IS_TYPE_KIND(p->eKind) || p->eKind == UNIVERSAL_) {
                 TP_._.T.type = p;
-                TP_.nSize = p->_.Alias.nSize;
+                TP_._.T.nSize = p->_.Alias.nSize;
             } else {
                 TP_._.T.type = pUniversal;
-                TP_.nSize = 0;
+                TP_._.T.nSize = 0;
                 Error( ERR_TYPE_EXPECTED );
             }
             TP_.nont = TP;
@@ -329,7 +329,7 @@ void semantics(int rule){
             p->eKind = ARRAY_TYPE_;
             p->_.Array.nNumElems = n;
             p->_.Array.pElemType = t;
-            p->_.Array.nSize = n * TP_.nSize;
+            p->_.Array.nSize = n * TP_._.T.nSize;
 
             break;
 
@@ -345,7 +345,7 @@ void semantics(int rule){
 
             p->eKind =ALIAS_TYPE_;
             p->_.Alias.pBaseType = t;
-            p->_.Array.nSize = TP_.nSize;
+            p->_.Array.nSize = TP_._.T.nSize;
 
             break;
 
@@ -360,7 +360,7 @@ void semantics(int rule){
 
             p->eKind = STRUCT_TYPE_;
             p->_.Struct.pFields = DC_._.DC.list;
-            p->_.Struct.nSize = DC_.nSize;
+            p->_.Struct.nSize = DC_._.DC.nSize;
 
             EndBlock();
 
@@ -382,13 +382,13 @@ void semantics(int rule){
                 p->eKind = FIELD_;
                 p->_.Field.pType = t;
                 p->_.Field.nIndex = n;
-                p->_.Field.nSize = TP_.nSize;
-                n = n + TP_.nSize;
+                p->_.Field.nSize = TP_._.T.nSize;
+                n = n + TP_._.T.nSize;
                 p = p->pNext;
             }
             
             DC_._.DC.list = LI_._.LI.list;
-            DC_.nSize = n;
+            DC_._.DC.nSize = n;
             DC_.nont = DC;
             StackSem.push_front(DC_);
             
@@ -407,21 +407,21 @@ void semantics(int rule){
             DC1_ = StackSem.front();
             StackSem.pop_front();
 
-            n = DC1_.nSize;
+            n = DC1_._.DC.nSize;
 
             while (p != NULL && p->eKind == NO_KIND_DEF_){
                 p->eKind = FIELD_;
                 p->_.Field.pType = t;
                 p->_.Field.nIndex = n;
-                p->_.Field.nSize = TP_.nSize;
-                n = n + TP_.nSize;
+                p->_.Field.nSize = TP_._.T.nSize;
+                n = n + TP_._.T.nSize;
                 p = p->pNext;
             }
 
             DC0_.nont = DC;
             DC0_._.DC.list = DC1_._.DC.list;
-            DC_.nSize = n;
             StackSem.push_front(DC0_);
+            DC_._.DC.nSize = n;
 
             break;
 
@@ -438,10 +438,10 @@ void semantics(int rule){
             p->eKind = PARAM_;
             p->_.Param.pType = t;
             p->_.Param.nIndex = 0;
-            p->_.Param.nSize = TP_.nSize;
+            p->_.Param.nSize = TP_._.T.nSize;
 
             LP_._.LP.list = p;
-            LP_.nSize = TP_.nSize;
+            LP_._.LP.nSize = TP_._.T.nSize;
             LP_.nont = LP;
             
             StackSem.push_front(LP_);
@@ -459,17 +459,17 @@ void semantics(int rule){
             StackSem.pop_front();
 
             LP1_ = StackSem.front();
-            n = LP1_.nSize;
             StackSem.pop_front();
+            n = LP1_._.LP.nSize;
             
             
             p->eKind = PARAM_;
             p->_.Param.pType = t;
             p->_.Param.nIndex = n;
-            p->_.Param.nSize = TP_.nSize;
+            p->_.Param.nSize = TP_._.T.nSize;
             
             LP0_._.LP.list = LP1_._.LP.list;
-            LP0_.nSize = n + TP_.nSize;
+            LP0_._.LP.nSize = n + TP_._.T.nSize;
             LP0_.nont = LP;
             
             StackSem.push_front(LP0_);
@@ -491,8 +491,8 @@ void semantics(int rule){
             f->eKind = FUNCTION_;
             f->_.Function.pRetType = TP_._.T.type;
             f->_.Function.pParams = LP_._.LP.list;
-            f->_.Function.nParams = LP_.nSize;
-            f->_.Function.nVars = LP_.nSize;
+            f->_.Function.nParams = LP_._.LP.nSize;
+            f->_.Function.nVars = LP_._.LP.nSize;
 
             fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams;
 
