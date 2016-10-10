@@ -114,14 +114,15 @@ bool CheckTypes(pobject t1,pobject t2){
 
 
 void semantics(int rule){
-    static pobject p, t, f, t1, t2;
     static int name, n, nFuncs;
+    static long current, offset;
+    static pobject p, t, f, t1, t2, o;
     static t_attrib IDD_, IDU_, ID_, TP_, LI_, LI0_, LI1_,\
                     TRUE_, FALSE_, CHR_, STR_, NUM_, DC_, \
                     DC0_, DC1_, LP_, LP0_, LP1_, E_, L_,  \
                     E1_, E0_, L0_, L1_, R_, TM_, F_, LV_, \
-                    F0_, F1_, LV0_, LV1_, MC_, LE_, LE0_,  \
-                    LE1_, R0_, R1_, TM0_, TM1_;
+                    F0_, F1_, LV0_, LV1_, MC_, LE_, LE0_, \
+                    LE1_, R0_, R1_, TM0_, TM1_, MF_;
 
     switch(rule){
 
@@ -251,15 +252,24 @@ void semantics(int rule){
 
         case VAR_LI_TP_RULE:                          // DV -> VAR LI COLON TP SEMI_COLON
 
-            TP_ = StackSem.front();
-            StackSem.pop_front();
+            TP_ = StackSem.back();
             t = TP_._.T.type;
-            LI_ = StackSem.front();
-            StackSem.pop_front();
+            StackSem.pop_back();
+            
+            LI_ = StackSem.back();
             p = LI_._.LI.list;
+            StackSem.pop_back();
+
+            n = f->_.Function.nVars;
+
             while (p != NULL && p->eKind == NO_KIND_DEF_){
                 p->eKind = VAR_;
                 p->_.Var.pType = t;
+
+                p->_.Var.nIndex = n;
+                p->_.Var.nSize = TP_._.T.nSize;
+
+                n += TP_._.T.nSize;
                 p = p->pNext;
             }
 
@@ -493,13 +503,31 @@ void semantics(int rule){
             f->_.Function.nParams = LP_._.LP.nSize;
             f->_.Function.nVars = LP_._.LP.nSize;
 
-            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams;
+            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "  " << std::endl;
+            offset = fs.tellg();
+            offset -= 3;
+            MF_._.MF.offset = offset;
+            MF_.nont = MF;
+            StackSem.push_back(MF_);
 
             break;
 
         case FUNCTION_IDD_NF_LP_TP_B_RULE:            // DF -> FUNCTION IDD NF LEFT_PARENTHESIS LP RIGHT_PARENTHESIS COLON TP MF B
-
             EndBlock();
+            
+            MF_ = StackSem.back();
+            offset = MF_._.MF.offset;
+            StackSem.pop_back();
+
+            IDD_ = StackSem.back();
+            o = IDD_._.ID.obj;
+            StackSem.pop_back();
+
+            current = fs.tellp();
+            fs.seekp(offset, ios_base::beg);
+            fs << " " << o->_.Function.nVars << std::endl;
+            fs.seekp(current, ios_base::beg);
+            fs << "END_FUNC" << std::endl;
 
             break;
 
