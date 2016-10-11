@@ -12,6 +12,8 @@
 
 using namespace std;
 
+extern bool hasError;
+
 stack<int> pilhaEstado;
 int CSVdict[86];
 
@@ -178,5 +180,8 @@ void parse(){
             q = TOP();
         }
     } while(q != 300);
-    printf("Passou\n");
+    if (!hasError)
+        printf("SUCESSO\n");
+    else
+        printf("REVISE SEU CODIGO\n");
 }
