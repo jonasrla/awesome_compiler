@@ -122,7 +122,7 @@ bool CheckTypes(pobject t1,pobject t2){
 void semantics(int rule){
     static int name, n, nFuncs, l, l1, l2;
     static long current, offset;
-    static pobject p, t, f, t1, t2, o;
+    static pobject p, t, f, t1, t2, o, func;
     static t_attrib IDD_, IDU_, ID_, TP_, LI_, LI0_, LI1_,\
                     TRUE_, FALSE_, CHR_, STR_, NUM_, DC_, \
                     DC0_, DC1_, LP_, LP0_, LP1_, E_, L_,  \
@@ -1156,6 +1156,7 @@ void semantics(int rule){
                     LV0_._.LV.type = pUniversal;
                 } else {
                     LV0_._.LV.type = p->_.Field.pType;
+                    fs << "\tADD " << p->_.Field.nIndex << std::endl;
                 }
             }
             LV0_.nont = LV;
@@ -1182,6 +1183,8 @@ void semantics(int rule){
                 LV0_._.LV.type = pUniversal;
             } else {
                 LV0_._.LV.type = t->_.Array.pElemType;
+                fs << "\tMUL " << t->_.Array.pElemType->_.Type.nSize << std::endl;
+                fs << "\tADD" << std::endl;
             }
             if(!CheckTypes(E_._.E.type, pInt)){
                 Error( ERR_INVALID_INDEX_TYPE );
@@ -1203,6 +1206,7 @@ void semantics(int rule){
                 LV_._.LV.type = pUniversal;
             } else {
                 LV_._.LV.type = p->_.Var.pType;
+                fs << "\tLOAD_REF " << p->_.Var.nIndex << std::endl;
             }
             
             LV_.nont = LV;
@@ -1250,6 +1254,8 @@ void semantics(int rule){
             IDU_ = StackSem.back();
             StackSem.pop_back();
 
+            func = IDU_._.ID.obj;
+
             F_._.F.type = MC_._.MC.type;
             if( !MC_._.MC.err ) {
                 if( LE_._.LE.n-1 < f->_.Function.nParams && LE_._.LE.n != 0) {
@@ -1260,6 +1266,9 @@ void semantics(int rule){
                 }
             }
             F_.nont = F;
+
+            fs << "\tCALL " << func->_.Function.nIndex << std::endl;
+
             StackSem.push_back(F_);
             
             break;
