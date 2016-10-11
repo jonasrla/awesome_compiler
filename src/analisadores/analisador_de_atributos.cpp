@@ -512,7 +512,7 @@ void semantics(int rule){
             f->_.Function.nParams = LP_._.LP.nSize;
             f->_.Function.nVars = 0;
 
-            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "   " << std::endl;
+            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "   ";
             offset = fs.tellg();
             offset -= 4;
             MF_._.MF.offset = offset;
@@ -560,7 +560,7 @@ void semantics(int rule){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
 
-            fs << "L" << l << ":" << std::endl;
+            fs << "L" << l << std::endl;
 
             break;
 
@@ -578,7 +578,7 @@ void semantics(int rule){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
 
-            fs << "L" << l << ":" << std::endl;
+            fs << "L" << l << std::endl;
 
             break;
 
