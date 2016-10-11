@@ -639,6 +639,8 @@ void semantics(int rule){
             E0_._.E.type = pBool;
             E0_.nont = E;
 
+            fs << "\tAND" << std::endl;
+
             StackSem.push_back(E0_);
 
             break;
@@ -659,6 +661,8 @@ void semantics(int rule){
 
             E0_._.E.type = pBool;
             E0_.nont = E;
+
+            fs << "\tOR" << std::endl;
 
             StackSem.push_back(E0_);
 
@@ -687,6 +691,9 @@ void semantics(int rule){
             }
             L0_._.L.type = pBool;
             L0_.nont = L;
+            
+            fs << "\tLT" << std::endl;
+
             StackSem.push_back(L0_);
 
 
@@ -704,6 +711,9 @@ void semantics(int rule){
             }
             L0_._.L.type = pBool;
             L0_.nont = L;
+            
+            fs << "\tGT" << std::endl;
+
             StackSem.push_back(L0_);
 
             break;
@@ -720,6 +730,9 @@ void semantics(int rule){
             }
             L0_._.L.type = pBool;
             L0_.nont = L;
+            
+            fs << "\tLE" << std::endl;
+
             StackSem.push_back(L0_);
 
             break;
@@ -736,6 +749,9 @@ void semantics(int rule){
             }
             L0_._.L.type = pBool;
             L0_.nont = L;
+
+            fs << "\tGE" << std::endl;
+
             StackSem.push_back(L0_);
 
             break;
@@ -752,6 +768,9 @@ void semantics(int rule){
             }
             L0_._.L.type = pBool;
             L0_.nont = L;
+
+            fs << "\tEQ" << std::endl;
+
             StackSem.push_back(L0_);
 
             break;
@@ -768,6 +787,9 @@ void semantics(int rule){
             }
             L0_._.L.type = pBool;
             L0_.nont = L;
+
+            fs << "\tNE" << std::endl;
+
             StackSem.push_back(L0_);
 
             break;
@@ -800,6 +822,9 @@ void semantics(int rule){
             
             R0_._.R.type = R1_._.R.type;
             R0_.nont = R;
+            
+            fs << "\tADD" << std::endl;
+
             StackSem.push_back(R0_);
 
             break;
@@ -821,6 +846,9 @@ void semantics(int rule){
 
             R0_._.R.type = R1_._.R.type;
             R0_.nont = R;
+
+            fs << "\tSUB" << std::endl;
+
             StackSem.push_back(R0_);
 
             break;
@@ -853,6 +881,9 @@ void semantics(int rule){
 
             TM0_._.TM.type = TM1_._.TM.type;
             TM0_.nont = TM;
+
+            fs << "\tMUL" << std::endl;
+
             StackSem.push_back(TM0_);
 
             break;
@@ -874,6 +905,9 @@ void semantics(int rule){
 
             TM0_._.TM.type = TM1_._.TM.type;
             TM0_.nont = TM;
+
+            fs << "\tDIV" << std::endl;
+
             StackSem.push_back(TM0_);
 
             break;
@@ -894,7 +928,11 @@ void semantics(int rule){
             LV_ = StackSem.back();
             F_._.F.type = LV_._.LV.type;
             StackSem.pop_back();
-            
+
+            n = LV_._.LV.type->_.Var.nSize;
+
+            fs << "\tDE_REF " << n << std::endl;
+
             F_.nont = F;
             StackSem.push_back(F_);
 
@@ -912,6 +950,10 @@ void semantics(int rule){
             
             F_._.F.type = pInt;
             F_.nont = F;
+            
+            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl;
+            fs << "\tINC" << std::endl << "\tSTORE_REF 1\tDE_REF 1" << std::endl;
+
             StackSem.push_back(F_);
 
             break;
@@ -928,6 +970,10 @@ void semantics(int rule){
             
             F_._.F.type = pInt;
             F_.nont = F;
+
+            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl;
+            fs << "\tDEC" << std::endl << "\tSTORE_REF 1\tDE_REF 1" << std::endl;
+
             StackSem.push_back(F_);
 
             break;
@@ -946,6 +992,8 @@ void semantics(int rule){
             F_.nont = F;
             StackSem.push_back(F_);
 
+            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl << "\tINC" << std::endl;
+            fs << "\tSTORE_REF 1\tDE_REF 1" << std::endl << "\tDEC" << std::endl;
 
             break;
 
@@ -961,6 +1009,10 @@ void semantics(int rule){
             
             F_._.F.type = pInt;
             F_.nont = F;
+
+            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl << "\tDEC" << std::endl;
+            fs << "\tSTORE_REF 1\tDE_REF 1" << std::endl << "\tINC" << std::endl;
+
             StackSem.push_back(F_);
 
 
@@ -978,6 +1030,9 @@ void semantics(int rule){
             
             F0_._.F.type = pInt;
             F0_.nont = F;
+
+            fs << "\tNEG" << std::endl;
+
             StackSem.push_back(F0_);
 
             break;
@@ -994,6 +1049,9 @@ void semantics(int rule){
             
             F0_._.F.type = pInt;
             F0_.nont = F;
+
+            fs << "\tNOT" << std::endl;
+
             StackSem.push_back(F0_);
 
             break;
@@ -1005,6 +1063,10 @@ void semantics(int rule){
             
             F_._.F.type = pBool;
             F_.nont = F;
+
+            n = tokenSecundario;
+            fs << "\tLOAD_CONST " << n << std::endl;
+
             StackSem.push_back(F_);
 
             break;
@@ -1016,6 +1078,10 @@ void semantics(int rule){
             
             F_._.F.type = pBool;
             F_.nont = F;
+
+            n = tokenSecundario;
+            fs << "\tLOAD_CONST " << n << std::endl;
+
             StackSem.push_back(F_);
 
             break;
@@ -1027,6 +1093,10 @@ void semantics(int rule){
             
             F_._.F.type = pChar;
             F_.nont = F;
+
+            n = tokenSecundario;
+            fs << "\tLOAD_CONST " << n << std::endl;
+
             StackSem.push_back(F_);
 
             break;
@@ -1038,6 +1108,10 @@ void semantics(int rule){
             
             F_._.F.type = pString;
             F_.nont = F;
+
+            n = tokenSecundario;
+            fs << "\tLOAD_CONST " << n << std::endl;
+
             StackSem.push_back(F_);
 
             break;
@@ -1049,6 +1123,10 @@ void semantics(int rule){
             
             F_._.F.type = pInt;
             F_.nont = F;
+
+            n = tokenSecundario;
+            fs << "\tLOAD_CONST " << n << std::endl;
+
             StackSem.push_back(F_);
 
             break;
