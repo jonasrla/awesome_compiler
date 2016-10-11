@@ -74,3 +74,5 @@ typedef struct {
 } t_attrib;
 
 void print_nterm(t_nterm val);
+
+void print_eKind(t_kind);

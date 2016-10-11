@@ -1403,5 +1403,38 @@ void print_nterm(t_nterm val){
 
         std::cout << "NF" << std::endl;
         break;
+
+void print_eKind(t_kind val){
+    switch (val){
+        case NO_KIND_DEF_:
+            std::cout << "NO_KIND_DEF_" << std::endl;
+            break;
+        case VAR_:
+            std::cout << "VAR_" << std::endl;
+            break;
+        case PARAM_:
+            std::cout << "PARAM_" << std::endl;
+            break;
+        case FUNCTION_:
+            std::cout << "FUNCTION_" << std::endl;
+            break;
+        case FIELD_:
+            std::cout << "FIELD_" << std::endl;
+            break;
+        case ARRAY_TYPE_:
+            std::cout << "ARRAY_TYPE_" << std::endl;
+            break;
+        case STRUCT_TYPE_:
+            std::cout << "STRUCT_TYPE_" << std::endl;
+            break;
+        case ALIAS_TYPE_:
+            std::cout << "ALIAS_TYPE_" << std::endl;
+            break;
+        case SCALAR_TYPE_:
+            std::cout << "SCALAR_TYPE_" << std::endl;
+            break;
+        case UNIVERSAL_:
+            std::cout << "UNIVERSAL_" << std::endl;
+            break;
     }
 }
