@@ -2,4 +2,4 @@
 *.bak
 awe_comp
 .DS_STORE
-.s
+*.s
