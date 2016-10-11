@@ -512,9 +512,9 @@ void semantics(int rule){
             f->_.Function.nParams = LP_._.LP.nSize;
             f->_.Function.nVars = LP_._.LP.nSize;
 
-            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "  " << std::endl;
+            fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "   " << std::endl;
             offset = fs.tellg();
-            offset -= 3;
+            offset -= 4;
             MF_._.MF.offset = offset;
             MF_.nont = MF;
             StackSem.push_back(MF_);
