@@ -1,32 +1,38 @@
 type id = string
 
+type my_array = array[5] of integer
+
 type structTest = struct { id1 , id2 , id3 : integer ; id4 , id5 : string }
 
-function fun1 ( id : string ) : integer {
+function fun1 ( id : string, outro : integer) : integer {
 	var c : boolean;
 	var a : integer;
 	var b : integer;
-	var i : integer;
+	var i : string;
+	var s : my_array;
+	id = "string";
 	c = true && false;
-
+	a = 5;
+	outro = outro++;
+	s[1-1] = 1;
+	a = s[1];
 	while( a != b)
-		i = i+1;
+		a = a+1;
 }
 
-function fun2 ( id : string ) : integer {
+function fun2 ( id : integer , outro : string ) : integer {
 	var c : boolean;
 	var a : integer;
 	var b : integer;
 	var x : integer;
+	var i : integer;
 	c = true && false;
-	if( a>b || 12 ==x) {
-		var i: integer;
-		i = i+1;
-	} else {
-		var t: integer;
-		t = t +1;
-	}
-	if(a==fun2(3))
+	if( a>b || x == 12)
+		a = 3;
+	else
+		i = i + 1;
+
+	if(a==fun2(3,"3"))
 		break;
 	else
 		break;
