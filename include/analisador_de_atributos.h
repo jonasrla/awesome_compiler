@@ -70,6 +70,9 @@ typedef struct {
         struct{
             long offset;
         }MF;
+        struct{
+            int label;
+        }MT,ME;
     }_;
 } t_attrib;
 

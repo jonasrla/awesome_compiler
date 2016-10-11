@@ -13,6 +13,12 @@ object bool_ = { -1, NULL, SCALAR_TYPE_ };      pobject pBool = &bool_;
 object string_ = { -1, NULL, SCALAR_TYPE_ };    pobject pString = &string_;
 object universal_= { -1, NULL, SCALAR_TYPE_ };  pobject pUniversal = &universal_;
 
+int newLabel(){
+    static int labelNo = 0;
+    return labelNo++;
+}
+
+
 void Error(errorcode code){
     hasError = true;
     std::cout << "Linha: " << currentLine << " - ";
@@ -114,7 +120,7 @@ bool CheckTypes(pobject t1,pobject t2){
 
 
 void semantics(int rule){
-    static int name, n, nFuncs;
+    static int name, n, nFuncs, l, l1, l2;
     static long current, offset;
     static pobject p, t, f, t1, t2, o;
     static t_attrib IDD_, IDU_, ID_, TP_, LI_, LI0_, LI1_,\
@@ -122,7 +128,8 @@ void semantics(int rule){
                     DC0_, DC1_, LP_, LP0_, LP1_, E_, L_,  \
                     E1_, E0_, L0_, L1_, R_, TM_, F_, LV_, \
                     F0_, F1_, LV0_, LV1_, MC_, LE_, LE0_, \
-                    LE1_, R0_, R1_, TM0_, TM1_, MF_;
+                    LE1_, R0_, R1_, TM0_, TM1_, MF_, MT_, \
+                    ME_;
 
     switch(rule){
 
@@ -539,6 +546,10 @@ void semantics(int rule){
 
         case IF_E_S_RULE:                             // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S
 
+            MT_ = StackSem.back();
+            l = MT_._.MT.label;
+            StackSem.pop_back();
+
             E_ = StackSem.back();
             t = E_._.E.type;
             StackSem.pop_back();
@@ -547,9 +558,15 @@ void semantics(int rule){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
 
+            fs << "L" << l << ":" << std::endl;
+
             break;
 
         case IF_E_S_ELSE_S_RULE:                      // S -> IF LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S ELSE ME S
+
+            ME_ = StackSem.back();
+            l = ME_._.ME.label;
+            StackSem.pop_back();
 
             E_ = StackSem.back();
             t = E_._.E.type;
@@ -558,6 +575,8 @@ void semantics(int rule){
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
+
+            fs << "L" << l << ":" << std::endl;
 
             break;
 
@@ -1227,13 +1246,38 @@ void semantics(int rule){
             f->_.Function.pParams = NULL;
             f->_.Function.nParams = 0;
             f->_.Function.nIndex = nFuncs++;
-
             NewBlock();
 
-        case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
-        //std::cout << "B -> LEFT_BRACES LDV LS RIGHT_BRACES " << currentLine << std::endl;
-        
+            break;
 
+        case MT_RULE:                                  // MT -> ''
+
+            l = newLabel();
+            MT_._.MT.label = l;
+
+            fs << "\tJMP_FW L" << l << std::endl;
+
+            StackSem.push_back(MT_);
+
+            break;
+
+        case ME_RULE:                                  // ME -> ''
+
+            MT_ = StackSem.back();
+            l1 = MT_._.MT.label;
+            StackSem.pop_back();
+
+            l2 = newLabel();
+            ME_._.ME.label = l2;
+
+            fs << "\tJMP_FW L" << l2 << std::endl << "L" << l1 << std::endl;
+
+            StackSem.push_back(ME_);
+
+            break;
+
+        case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
+        //TODO
 
             break;
 
