@@ -1,0 +1,15 @@
+function fatorial (n: integer) : integer{
+	var i, f: integer;
+	i = 2;
+	f = 1;
+	while (i <= n)
+		f = f*i++;
+}
+
+function somaFat (n: integer) : integer{
+	var i, s: integer;
+	s = 0;
+	i = s;
+	while (++i <= n)
+		s = s + fatorial(i);
+}

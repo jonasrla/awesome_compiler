@@ -1,0 +1,17 @@
+type intArray = array [30] of integer;
+
+function bSort(a: intArray, n: integer) : intArray{
+	var i, j, v: integer;
+	i = 0;
+	while (i<n){
+		j = i+1;
+		while ( j < n){
+			if (a[i] > a[j]){
+				v = a[i];
+				a[i++] = a[j];
+				a[j++] = n;
+			}
+		}
+	}
+	return a;
+}
