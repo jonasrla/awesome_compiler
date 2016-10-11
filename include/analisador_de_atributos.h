@@ -72,7 +72,7 @@ typedef struct {
         }MF;
         struct{
             int label;
-        }MT,ME;
+        }MT,ME,MW;
     }_;
 } t_attrib;
 

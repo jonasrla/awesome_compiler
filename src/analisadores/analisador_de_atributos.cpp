@@ -129,7 +129,7 @@ void semantics(int rule){
                     E1_, E0_, L0_, L1_, R_, TM_, F_, LV_, \
                     F0_, F1_, LV0_, LV1_, MC_, LE_, LE0_, \
                     LE1_, R0_, R1_, TM0_, TM1_, MF_, MT_, \
-                    ME_;
+                    ME_, MW_;
 
     switch(rule){
 
@@ -584,13 +584,23 @@ void semantics(int rule){
 
         case WHILE_E_S_RULE:                          // S -> WHILE MW LEFT_PARENTHESIS E RIGHT_PARENTHESIS MT S
 
+            MT_ = StackSem.back();
+            l2 = MT_._.MT.label;
+            StackSem.pop_back();
+
             E_ = StackSem.back();
             t = E_._.E.type;
+            StackSem.pop_back();
+
+            MW_ = StackSem.back();
+            l1 = MW_._.MW.label;
             StackSem.pop_back();
             
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
+
+            fs << "\tJMP_BW L" << l1 << std::endl << "L" << l2 << std::endl;
 
             break;
 
@@ -599,10 +609,16 @@ void semantics(int rule){
             E_ = StackSem.back();
             t = E_._.E.type;
             StackSem.pop_back();
+
+            MW_ = StackSem.back();
+            l = MW_._.MW.label;
+            StackSem.pop_back();
             
             if( !CheckTypes(t,pBool)){
                 Error(ERR_BOOL_TYPE_EXPECTED);
             }
+
+            fs << "\tNOT" << std::endl << "\tJMP_BW L" << l << std::endl;
 
             break;
 
@@ -1256,7 +1272,8 @@ void semantics(int rule){
 
             l = newLabel();
             MT_._.MT.label = l;
-
+            MT_.nont = MT;
+            
             fs << "\tJMP_FW L" << l << std::endl;
 
             StackSem.push_back(MT_);
@@ -1271,10 +1288,23 @@ void semantics(int rule){
 
             l2 = newLabel();
             ME_._.ME.label = l2;
-
+            ME_.nont = ME;
+            
             fs << "\tJMP_FW L" << l2 << std::endl << "L" << l1 << std::endl;
 
             StackSem.push_back(ME_);
+
+            break;
+
+        case MW_RULE:                                  // MW -> ''
+
+            l = newLabel();
+            MW_._.MW.label = l;
+            MW_.nont = MW;
+
+            fs << "L" << l << std::endl;
+
+            StackSem.push_back(MW_);
 
             break;
 
