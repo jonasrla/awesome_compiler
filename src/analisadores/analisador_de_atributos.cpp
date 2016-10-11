@@ -510,7 +510,7 @@ void semantics(int rule){
             f->_.Function.pRetType = TP_._.T.type;
             f->_.Function.pParams = LP_._.LP.list;
             f->_.Function.nParams = LP_._.LP.nSize;
-            f->_.Function.nVars = LP_._.LP.nSize;
+            f->_.Function.nVars = 0;
 
             fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "   " << std::endl;
             offset = fs.tellg();
