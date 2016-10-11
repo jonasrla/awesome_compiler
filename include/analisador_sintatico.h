@@ -25,7 +25,7 @@
 #endif
 
 typedef enum{
-    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC,NF,MT,ME,MW
+    P = 51,LDE,DE,DT,TP,DC,DF,LP,B,LDV,LS,DV,LI,S,E,L,R,TM,F,LE,LV,IDD,IDU,ID,NT_TRUE,NT_FALSE,NT_CHR,NT_STR,NT_NUM,NB,MF,MC,NF,MT,ME,MW,MA
 } t_nterm;
 
 void parse();
@@ -129,3 +129,4 @@ void parse();
 #define MT_RULE 81
 #define ME_RULE 82
 #define MW_RULE 83
+#define MA_RULE 84
