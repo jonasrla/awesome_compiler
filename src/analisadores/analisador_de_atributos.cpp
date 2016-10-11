@@ -1403,6 +1403,10 @@ void print_nterm(t_nterm val){
 
         std::cout << "NF" << std::endl;
         break;
+    default:
+        break;
+    }
+}
 
 void print_eKind(t_kind val){
     switch (val){
