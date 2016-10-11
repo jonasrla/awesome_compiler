@@ -279,7 +279,9 @@ void semantics(int rule){
                 n += TP_._.T.nSize;
                 p = p->pNext;
             }
-
+            
+            f->_.Function.nVars = n;
+            
             break;
 
         case TRUE_RULE:                               // NT_TRUE -> TRUE
