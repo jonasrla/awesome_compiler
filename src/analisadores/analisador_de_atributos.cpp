@@ -1340,6 +1340,9 @@ void semantics(int rule){
             F_._.F.type = t2;
             F_.nont = F;
 
+            fs << "\tSTORE_REF " << t2->_.Type.nSize << std::endl;
+            fs << "\tDE_REF " << t2->_.Type.nSize << std::endl;
+
             break;
 
         case NF_RULE:                                  // NF -> ''
@@ -1392,6 +1395,12 @@ void semantics(int rule){
             fs << "L" << l << std::endl;
 
             StackSem.push_back(MW_);
+
+            break;
+
+        case MA_RULE:                                  // MA -> ''
+
+            fs << "\tDUP" << std::endl;
 
             break;
 
