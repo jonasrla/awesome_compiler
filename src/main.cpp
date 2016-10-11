@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 {
     // BEGIN command line inputs
     std::string input_file_name = "programa";
-    std::string output_file_name = "executavel";
+    std::string output_file_name = "executavel.s";
     fs = std::fstream();
     if (argc == 2) {
         if (!strcmp(argv[1],"-o")) {
