@@ -15,7 +15,8 @@ token_dict ReservedWords;
 sec_token_dict UnreservedWords;
 
 t_token nextToken(){
-
+    char value = '\0';
+    char eval = '\0';
     while (isspace(nextChar)){
         nextChar = readChar();
     }
@@ -57,9 +58,31 @@ t_token nextToken(){
     } else {
         switch(nextChar) {
             case '\'':
-                nextChar = readChar();
+                value = readChar();
+                if (value == '\\'){
+                    eval = readChar();
+                    switch (eval) {
+                        case '0':
+                            value = '\0';
+                            break;
+                        case 'n':
+                            value = '\n';
+                            break;
+                        case 'r':
+                            value = '\r';
+                            break;
+                        case '\\':
+                            value = '\\';
+                            break;
+                        case 't':
+                            value = '\t';
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 token = CHARACTER;
-                tokenSecundario = addCharConst(nextChar);
+                tokenSecundario = addCharConst(value);
                 readChar();
                 nextChar = readChar();
                 break;
@@ -205,6 +228,7 @@ t_token nextToken(){
                 break;
             default:
                 token = UNKNOWN;
+                break;
         }
     }
     return token;
