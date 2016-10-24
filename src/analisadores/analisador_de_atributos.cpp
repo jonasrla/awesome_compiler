@@ -1404,33 +1404,6 @@ void semantics(int rule){
 
             break;
 
-        case LDV_LS_RULE:                             // B -> LEFT_BRACES LDV LS RIGHT_BRACES
-        //TODO
-
-            break;
-
-        case LDV_DV_RULE:                             // LDV -> LDV DV
-        
-
-
-            break;
-
-        case DV_RULE:                                 // LDV -> DV
-        
-
-
-            break;
-
-        case LS_S_RULE:                               // LS -> LS S
-        
-
-
-            break;
-
-        case S_RULE:                                  // LS -> S
-        
-
-
         default:
             break;
     }
