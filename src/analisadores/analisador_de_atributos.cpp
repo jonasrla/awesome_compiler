@@ -439,7 +439,7 @@ void semantics(int rule){
 
             DC0_.nont = DC;
             DC0_._.DC.list = DC1_._.DC.list;
-            DC_._.DC.nSize = n;
+            DC0_._.DC.nSize = n;
             StackSem.push_back(DC0_);
 
             break;
@@ -514,7 +514,7 @@ void semantics(int rule){
 
             fs << "BEGIN_FUNC " << f->_.Function.nIndex << " " << f->_.Function.nParams << "   ";
             offset = fs.tellg();
-            offset -= 4;
+            offset -= 3;
             MF_._.MF.offset = offset;
             MF_.nont = MF;
             StackSem.push_back(MF_);
@@ -951,8 +951,8 @@ void semantics(int rule){
             F_._.F.type = pInt;
             F_.nont = F;
             
-            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl;
-            fs << "\tINC" << std::endl << "\tSTORE_REF 1\tDE_REF 1" << std::endl;
+            fs << "\tDUP" << std::endl << "\tDUP" << std::endl << "\tDE_REF 1" << std::endl;
+            fs << "\tINC" << std::endl << "\tSTORE_REF 1" << std::endl << "\tDE_REF 1" << std::endl;
 
             StackSem.push_back(F_);
 
@@ -971,8 +971,8 @@ void semantics(int rule){
             F_._.F.type = pInt;
             F_.nont = F;
 
-            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl;
-            fs << "\tDEC" << std::endl << "\tSTORE_REF 1\tDE_REF 1" << std::endl;
+            fs << "\tDUP" << std::endl << "\tDUP" << std::endl << "\tDE_REF 1" << std::endl;
+            fs << "\tDEC" << std::endl << "\tSTORE_REF 1" << std::endl << "\tDE_REF 1" << std::endl;
 
             StackSem.push_back(F_);
 
@@ -992,8 +992,8 @@ void semantics(int rule){
             F_.nont = F;
             StackSem.push_back(F_);
 
-            fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl << "\tINC" << std::endl;
-            fs << "\tSTORE_REF 1\tDE_REF 1" << std::endl << "\tDEC" << std::endl;
+            fs << "\tDUP" << std::endl << "\tDUP" << std::endl << "\tDE_REF 1" << std::endl << "\tINC" << std::endl;
+            fs << "\tSTORE_REF 1" << std::endl << "\tDE_REF 1" << std::endl << "\tDEC" << std::endl;
 
             break;
 
@@ -1011,7 +1011,7 @@ void semantics(int rule){
             F_.nont = F;
 
             fs << "\tDUP" << std::endl << "\tDUP\tDE_REF 1" << std::endl << "\tDEC" << std::endl;
-            fs << "\tSTORE_REF 1\tDE_REF 1" << std::endl << "\tINC" << std::endl;
+            fs << "\tSTORE_REF 1" << std::endl << "\tDE_REF 1" << std::endl << "\tINC" << std::endl;
 
             StackSem.push_back(F_);
 
@@ -1364,7 +1364,7 @@ void semantics(int rule){
             MT_._.MT.label = l;
             MT_.nont = MT;
             
-            fs << "\tJMP_FW L" << l << std::endl;
+            fs << "\tTJMP_FW L" << l << std::endl;
 
             StackSem.push_back(MT_);
 
@@ -1380,7 +1380,7 @@ void semantics(int rule){
             ME_._.ME.label = l2;
             ME_.nont = ME;
             
-            fs << "\tJMP_FW L" << l2 << std::endl << "L" << l1 << std::endl;
+            fs << "\tTJMP_FW L" << l2 << std::endl << "L" << l1 << std::endl;
 
             StackSem.push_back(ME_);
 
