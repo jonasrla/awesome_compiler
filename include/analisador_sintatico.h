@@ -126,7 +126,7 @@ void parse();
 #define MF_RULE 78									// MF -> ''
 #define MC_RULE 79									// MC -> ''
 #define NF_RULE 80									// NF -> ''
-#define MT_RULE 81
-#define ME_RULE 82
-#define MW_RULE 83
-#define MA_RULE 84
+#define MT_RULE 81									// MT -> ''
+#define ME_RULE 82									// ME -> ''
+#define MW_RULE 83									// MW -> ''
+#define MA_RULE 84									// MA -> ''
