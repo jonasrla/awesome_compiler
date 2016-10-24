@@ -130,3 +130,4 @@ void parse();
 #define ME_RULE 82									// ME -> ''
 #define MW_RULE 83									// MW -> ''
 #define MA_RULE 84									// MA -> ''
+#define LDV_RULE 85									// LDV -> ''
