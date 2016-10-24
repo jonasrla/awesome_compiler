@@ -1,4 +1,4 @@
-type intArray = array [30] of integer;
+type intArray = array [30] of integer
 
 function bSort(a: intArray, n: integer) : intArray{
 	var i, j, v: integer;
@@ -13,5 +13,4 @@ function bSort(a: intArray, n: integer) : intArray{
 			}
 		}
 	}
-	return a;
 }

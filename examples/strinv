@@ -5,12 +5,11 @@ function strinv(s:string): string{
 	l = 0;
 	i = l;
 	while(s[l] != '\0')
-		++l;
+		l = l + 1;
 
 	while( i < l){
 		c = s[i];
 		s[i++] = s[l];
 		s[l++] = c;
 	}
-	return s;
 }
